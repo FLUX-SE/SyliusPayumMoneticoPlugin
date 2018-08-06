@@ -1,0 +1,8 @@
+prometee:
+  monetico:
+    fields:
+      mode: Mode
+      bank: Bank
+      tpe: TPE
+      key: KEY
+      company: COMPANY

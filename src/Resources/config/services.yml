@@ -1,0 +1,38 @@
+services:
+    prometee.monetico.form.type.gateway_configuration:
+        class: Prometee\SyliusPayumMoneticoPlugin\Form\Type\MoneticoGatewayConfigurationType
+        tags:
+            - { name: sylius.gateway_configuration_type, type: monetico, label: prometee.monetico.gateway_label }
+            - { name: form.type }
+
+    prometee.monetico.gateway_factory:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments: [Ekyna\Component\Payum\Monetico\MoneticoGatewayFactory]
+        tags:
+            - { name: payum.gateway_factory_builder, factory: monetico }
+
+    prometee.monetico.action.capture:
+        class: Ekyna\Component\Payum\Monetico\Action\CaptureAction
+        arguments:
+            - '@payum'
+        tags:
+            - { name: payum.action, factory: monetico, alias: payum.action.capture }
+
+    prometee.monetico.action.notify:
+        class: Ekyna\Component\Payum\Monetico\Action\NotifyAction
+        arguments:
+            - '@sm.factory'
+        tags:
+            - { name: payum.action, factory: monetico, alias: payum.action.notify }
+
+    prometee.monetico.action.status:
+        class: Ekyna\Component\Payum\Monetico\Action\StatusAction
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: payum.action, factory: monetico, alias: payum.action.status }
+
+#    prometee.monetico.bridge.monetico_bridge:
+#        class: Prometee\SyliusPayumMoneticoPlugin\Bridge\MoneticoBridge
+#        arguments:
+#            - '@request_stack'

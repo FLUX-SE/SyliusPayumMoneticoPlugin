@@ -1,0 +1,35 @@
+{
+  "name": "prometee/syliuspayummonetico",
+  "description": "Payum Monetico Bridge for Sylius",
+  "type": "sylius-plugin",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/Prometee/PayumMonetico"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "sylius/sylius": "^1.2",
+    "payum/payum": "^1.5",
+    "ekyna/payum-monetico": "dev-master"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Francis Hilaire",
+      "email": "Prometee@users.noreply.github.com"
+    }
+  ],
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Prometee\\SyliusPayumMoneticoPlugin\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  }
+}
