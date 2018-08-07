@@ -1,5 +1,5 @@
 {
-  "name": "prometee/syliuspayummonetico",
+  "name": "prometee/sylius-payum-monetico-plugin",
   "description": "Payum Monetico Bridge for Sylius",
   "type": "sylius-plugin",
   "repositories": [
