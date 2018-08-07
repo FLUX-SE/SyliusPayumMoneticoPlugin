@@ -6,7 +6,7 @@ namespace Prometee\SyliusPayumMoneticoPlugin;
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-final class SyliusPayumMoneticoPlugin extends Bundle
+final class PrometeeSyliusPayumMoneticoPlugin extends Bundle
 {
     use SyliusPluginTrait;
 }
