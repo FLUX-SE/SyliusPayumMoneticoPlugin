@@ -1,5 +1,6 @@
 prometee:
   monetico:
+    gateway_label: Monetico paiement
     fields:
       mode: Mode
       bank: Bank
