@@ -58,6 +58,10 @@ final class MoneticoGatewayConfigurationType extends AbstractType
                     new NotBlank([
                         'message' => 'prometee.monetico.key.not_blank',
                         'groups' => ['sylius']
+                    ]),
+                    new Length([
+                        'groups' => ['sylius'],
+                        'max' => 40
                     ])
                 ],
             ])
