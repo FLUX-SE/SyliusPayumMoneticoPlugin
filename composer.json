@@ -2,16 +2,10 @@
   "name": "prometee/sylius-payum-monetico-plugin",
   "description": "Payum Monetico Bridge for Sylius",
   "type": "sylius-plugin",
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/Prometee/PayumMonetico"
-    }
-  ],
   "require": {
     "sylius/sylius": "^1.2",
     "payum/payum": "^1.5",
-    "ekyna/payum-monetico": "dev-master"
+    "ekyna/payum-monetico": "^1.5"
   },
   "license": "MIT",
   "authors": [
