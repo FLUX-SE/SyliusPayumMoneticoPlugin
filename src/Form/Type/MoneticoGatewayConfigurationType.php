@@ -37,7 +37,7 @@ final class MoneticoGatewayConfigurationType extends AbstractType
                     'prometee.monetico.bank.obc' => Api::BANK_OBC
                 ],
             ])
-            ->add('tpe', IntegerType::class, [
+            ->add('tpe', TextType::class, [
                 'label' => 'prometee.monetico.fields.tpe.label',
                 'help' => 'prometee.monetico.fields.tpe.help',
                 'constraints' => [

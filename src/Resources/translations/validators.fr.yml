@@ -1,8 +1,0 @@
-prometee:
-  monetico:
-    tpe:
-      not_blank: Le numéro de TPE ne peut pas être vide
-    key:
-      not_blank: KEY ne peut pas être vide
-    company:
-      not_blank: La société ne peut pas être vide
