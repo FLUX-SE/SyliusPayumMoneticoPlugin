@@ -60,7 +60,7 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
         $order = $payment->getOrder();
 
         if (false == $model['reference']) {
-            $model['reference'] = $payment->getId();
+            $model['reference'] = (string)$payment->getId();
         }
 
         if (false == $model['comment']) {
