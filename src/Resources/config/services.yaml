@@ -14,39 +14,9 @@ services:
         tags:
             - { name: payum.gateway_factory_builder, factory: monetico }
 
-    #Payum services
-    prometee.monetico.action.capture:
+    #PayumActions for Sylius
+    prometee.monetico.action.convert_payment_preprend:
         public: true
-        class: Ekyna\Component\Payum\Monetico\Action\CaptureAction
+        class: Prometee\SyliusPayumMoneticoPlugin\Action\SyliusConvertAction
         tags:
-            - { name: payum.action, factory: monetico, alias: sylius.monetico.capture }
-
-    prometee.monetico.action.convert_payment:
-        public: true
-        class: Ekyna\Component\Payum\Monetico\Action\ConvertPaymentAction
-        tags:
-            - { name: payum.action, factory: monetico, alias: sylius.monetico.convert_payment } 
-
-    prometee.monetico.action.notify:
-        public: true
-        class: Ekyna\Component\Payum\Monetico\Action\NotifyAction
-        tags:
-            - { name: payum.action, factory: monetico, alias: sylius.monetico.notify }
-
-    prometee.monetico.action.refund:
-        public: true
-        class: Ekyna\Component\Payum\Monetico\Action\RefundAction
-        tags:
-            - { name: payum.action, factory: monetico, alias: sylius.monetico.refund }
-
-    prometee.monetico.action.status:
-        public: true
-        class: Ekyna\Component\Payum\Monetico\Action\StatusAction
-        tags:
-            - { name: payum.action, factory: monetico, alias: sylius.monetico.status }
-
-    prometee.monetico.action.sync:
-        public: true
-        class: Ekyna\Component\Payum\Monetico\Action\SyncAction
-        tags:
-            - { name: payum.action, factory: monetico, alias: sylius.monetico.sync }
+            - { name: payum.action, factory: monetico, alias: sylius.monetico.convert_payment_preprend, prepend: true }
