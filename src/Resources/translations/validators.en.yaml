@@ -1,0 +1,8 @@
+prometee:
+  monetico:
+    tpe:
+      not_blank: TPE cannot be blank
+    key:
+      not_blank: KEY cannot be blank
+    company:
+      not_blank: COMPANY cannot be blank
