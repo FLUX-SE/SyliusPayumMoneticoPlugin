@@ -66,7 +66,7 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
         if (false == $model['comment']) {
             $comment = "Order: {$order->getNumber()}";
             if (null !== $customer = $order->getCustomer()) {
-                $comment .= "\n"."Customer: {$customer->getId()}";
+                $comment .= ", Customer: {$customer->getId()}";
             }
             $model['comment'] = $comment;
         }
