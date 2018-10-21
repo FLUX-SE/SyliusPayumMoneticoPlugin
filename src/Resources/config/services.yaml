@@ -20,3 +20,8 @@ services:
         class: Prometee\SyliusPayumMoneticoPlugin\Action\SyliusConvertAction
         tags:
             - { name: payum.action, factory: monetico, alias: sylius.monetico.convert_payment_preprend, prepend: true }
+            
+    #Monetico notify
+    Prometee\SyliusPayumMoneticoPlugin\Controller\NotifyController:
+        public: true
+        class: Prometee\SyliusPayumMoneticoPlugin\Controller\NotifyController
