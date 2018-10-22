@@ -26,8 +26,6 @@ class NotifyController extends Controller
     /**
      * @param Request $request
      * @return Response
-     * @throws NoResultException
-     * @throws NonUniqueResultException
      */
     public function index(Request $request) {
         // Get the reference you set in your ConvertAction
@@ -51,9 +49,15 @@ class NotifyController extends Controller
                 ])
                 ->getQuery()->getSingleResult();
         } catch (NoResultException $e) {
-            throw new NotFoundHttpException(sprintf('Payments not found for this reference : "%s" !', $reference), $e);
+            throw new NotFoundHttpException(
+                sprintf('Payments not found for this reference : "%s" !', $reference),
+                $e
+            );
         } catch (NonUniqueResultException $e) {
-            throw new NotFoundHttpException(sprintf('Many payments found for this reference : "%s", only one is required !', $reference), $e);
+            throw new NotFoundHttpException(
+                sprintf('Many payments found for this reference : "%s", only one is required !', $reference),
+                $e
+            );
         }
 
         /** @var PaymentMethodInterface $payment_method */
