@@ -24,6 +24,8 @@ use Payum\Core\Request\GetCurrency;
  */
 class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
 {
+    public const PAYMENT_ID_FORMAT = 'sylius_%s';
+
     use GatewayAwareTrait;
 
     /**
@@ -41,42 +43,19 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
         $model = ArrayObject::ensureArrayObject($payment->getDetails());
 
         if (false == $model['amount']) {
-            $this->gateway->execute($currency = new GetCurrency($payment->getCurrencyCode()));
-
-            $amount = (string)round($payment->getAmount(), $currency->exp);
-
-            if (0 < $currency->exp && false !== $pos = strpos($amount, '.')) {
-                $amount = str_pad($amount, $pos + 1 + $currency->exp, '0', STR_PAD_RIGHT);
-            }
-
-            if (substr($amount, strrpos($amount, '.')) == 0) {
-                $amount = (string)round($amount);
-            }
-
-            $model['currency'] = (string)$currency->alpha3;
-            $model['amount'] = $amount;
+            $this->setAmount($model, $payment);
         }
 
-        $order = $payment->getOrder();
-
         if (false == $model['reference']) {
-            // The ID should be always unique so we can use it,
-            // but we can also use Unix timestamp to get a really uniq value
-            $model['reference'] = (string)$payment->getId();
+            $this->setReference($model, $payment);
         }
 
         if (false == $model['comment']) {
-            $comment = "Order: {$order->getNumber()}";
-            if (null !== $customer = $order->getCustomer()) {
-                $comment .= ", Customer: {$customer->getId()}";
-            }
-            $model['comment'] = $comment;
+            $this->setComment($model, $payment);
         }
 
         if (false == $model['email']) {
-            if (null !== $customer = $order->getCustomer()) {
-                $model['email'] = $customer->getEmail();
-            }
+            $this->setEmail($model, $payment);
         }
 
         $request->setResult((array)$model);
@@ -90,5 +69,64 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
         return $request instanceof Convert
             && $request->getSource() instanceof PaymentInterface
             && $request->getTo() == 'array';
+    }
+
+    /**
+     * @param array $model
+     * @param PaymentInterface $payment
+     */
+    protected function setAmount(array &$model, PaymentInterface $payment): void
+    {
+        $this->gateway->execute($currency = new GetCurrency($payment->getCurrencyCode()));
+
+        $amount = (string)round($payment->getAmount(), $currency->exp);
+
+        if (0 < $currency->exp && false !== $pos = strpos($amount, '.')) {
+            $amount = str_pad($amount, $pos + 1 + $currency->exp, '0', STR_PAD_RIGHT);
+        }
+
+        if (substr($amount, strrpos($amount, '.')) == 0) {
+            $amount = (string)round($amount);
+        }
+
+        $model['currency'] = (string)$currency->alpha3;
+        $model['amount'] = $amount;
+    }
+
+    /**
+     * @param array $model
+     * @param PaymentInterface $payment
+     */
+    protected function setReference(array &$model, PaymentInterface $payment): void
+    {
+        // The ID should be always unique so we can use it,
+        // but we can also use Unix timestamp to get a really uniq value
+        $model['reference'] = sprintf(static::PAYMENT_ID_FORMAT, $payment->getId());
+    }
+
+    /**
+     * @param array $model
+     * @param PaymentInterface $payment
+     */
+    protected function setComment(array &$model, PaymentInterface $payment): void
+    {
+        $order = $payment->getOrder();
+        $comment = "Order: {$order->getNumber()}";
+        if (null !== $customer = $order->getCustomer()) {
+            $comment .= ", Customer: {$customer->getId()}";
+        }
+        $model['comment'] = $comment;
+    }
+
+    /**
+     * @param array $model
+     * @param PaymentInterface $payment
+     */
+    protected function setEmail(array &$model, PaymentInterface $payment): void
+    {
+        $order = $payment->getOrder();
+        if (null !== $customer = $order->getCustomer()) {
+            $model['email'] = $customer->getEmail();
+        }
     }
 }
