@@ -60,6 +60,8 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
         $order = $payment->getOrder();
 
         if (false == $model['reference']) {
+            // The ID should be always unique so we can use it,
+            // but we can also use Unix timestamp to get a really uniq value
             $model['reference'] = (string)$payment->getId();
         }
 
