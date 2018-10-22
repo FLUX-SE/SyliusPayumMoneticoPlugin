@@ -72,10 +72,10 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
     }
 
     /**
-     * @param array $model
+     * @param ArrayObject $model
      * @param PaymentInterface $payment
      */
-    protected function setAmount(array &$model, PaymentInterface $payment): void
+    protected function setAmount(ArrayObject $model, PaymentInterface $payment): void
     {
         $this->gateway->execute($currency = new GetCurrency($payment->getCurrencyCode()));
 
@@ -94,10 +94,10 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
     }
 
     /**
-     * @param array $model
+     * @param ArrayObject $model
      * @param PaymentInterface $payment
      */
-    protected function setReference(array &$model, PaymentInterface $payment): void
+    protected function setReference(ArrayObject $model, PaymentInterface $payment): void
     {
         // The ID should be always unique so we can use it,
         // but we can also use Unix timestamp to get a really uniq value
@@ -105,10 +105,10 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
     }
 
     /**
-     * @param array $model
+     * @param ArrayObject $model
      * @param PaymentInterface $payment
      */
-    protected function setComment(array &$model, PaymentInterface $payment): void
+    protected function setComment(ArrayObject $model, PaymentInterface $payment): void
     {
         $order = $payment->getOrder();
         $comment = "Order: {$order->getNumber()}";
@@ -119,10 +119,10 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
     }
 
     /**
-     * @param array $model
+     * @param ArrayObject $model
      * @param PaymentInterface $payment
      */
-    protected function setEmail(array &$model, PaymentInterface $payment): void
+    protected function setEmail(ArrayObject $model, PaymentInterface $payment): void
     {
         $order = $payment->getOrder();
         if (null !== $customer = $order->getCustomer()) {
