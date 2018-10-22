@@ -71,16 +71,9 @@ class NotifyController extends Controller
         $gateway->execute(new Notify($payment));
         $gateway->execute(new GetHumanStatus($payment));
 
-        // Get the payment identity
-        $identity = $payum->getStorage($payment)->identify($payment);
-
-        // Invalidate payment tokens
-        $tokens = $payum->getTokenStorage()->findBy([
-            'details' => $identity,
-        ]);
-        foreach ($tokens as $token) {
-            $payum->getHttpRequestVerifier()->invalidate($token);
-        }
+        // We don't invalidate payment tokens because if the customer click on go back to the store
+        // the token will not exists anymore so there will be a 404 error page
+        // let Sylius delete the token when it will be expired
 
         // Return expected response
         return new Response(Api::NOTIFY_SUCCESS);
