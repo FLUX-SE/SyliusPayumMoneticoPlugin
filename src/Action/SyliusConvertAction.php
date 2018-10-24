@@ -78,19 +78,19 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
     protected function setAmount(ArrayObject $model, PaymentInterface $payment): void
     {
         $this->gateway->execute($currency = new GetCurrency($payment->getCurrencyCode()));
+        $amount = (string)$payment->getAmount();
 
-        $amount = (string)round($payment->getAmount(), $currency->exp);
+        if (0 < $currency->exp) {
+            $divisor = pow(10, $currency->exp);
+            $amount = (string)round($amount / $divisor, $currency->exp);
 
-        if (0 < $currency->exp && false !== $pos = strpos($amount, '.')) {
-            $amount = str_pad($amount, $pos + 1 + $currency->exp, '0', STR_PAD_RIGHT);
+            if (false !== $pos = strpos($amount, '.')) {
+                $amount = str_pad($amount, $pos + 1 + $currency->exp, '0', STR_PAD_RIGHT);
+            }
         }
 
-        if (substr($amount, strrpos($amount, '.')) == 0) {
-            $amount = (string)round($amount);
-        }
-
-        $model['currency'] = (string)$currency->alpha3;
         $model['amount'] = $amount;
+        $model['currency'] = (string)strtoupper($currency->code);
     }
 
     /**
