@@ -4,7 +4,6 @@
   "type": "sylius-plugin",
   "require": {
     "sylius/sylius": "^1.2",
-    "payum/payum": "^1.5",
     "ekyna/payum-monetico": "^1.5"
   },
   "license": "MIT",
