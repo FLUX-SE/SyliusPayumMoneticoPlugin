@@ -9,7 +9,6 @@
 namespace Prometee\SyliusPayumMoneticoPlugin\Action;
 
 
-use Sylius\Component\Core\Model\PaymentInterface;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
@@ -17,6 +16,8 @@ use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Convert;
 use Payum\Core\Request\GetCurrency;
+use Prometee\SyliusPayumMoneticoPlugin\Builder\ContextBuilder;
+use Sylius\Component\Core\Model\PaymentInterface;
 
 /**
  * Class SyliusConvertAction
@@ -24,9 +25,21 @@ use Payum\Core\Request\GetCurrency;
  */
 class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
 {
-    public const PAYMENT_ID_FORMAT = 'sylius_%s';
+    public const PAYMENT_ID_FORMAT = 'sylius%s';
 
     use GatewayAwareTrait;
+
+    /** @var ContextBuilder */
+    protected $contextBuilder;
+
+    /**
+     * SyliusConvertAction constructor.
+     * @param ContextBuilder $contextBuilder
+     */
+    public function __construct(ContextBuilder $contextBuilder)
+    {
+        $this->contextBuilder = $contextBuilder;
+    }
 
     /**
      * {@inheritDoc}
@@ -56,6 +69,10 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
 
         if (false == $model['email']) {
             $this->setEmail($model, $payment);
+        }
+
+        if (false == $model['context']) {
+            $model['context'] = $this->contextBuilder->build($payment);
         }
 
         $request->setResult((array)$model);

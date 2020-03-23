@@ -1,5 +1,7 @@
+imports:
+    - { resource: "./services/builders.yaml" }
+
 services:
-    
     #Sylius
     prometee.monetico.form.type.gateway_configuration:
         class: Prometee\SyliusPayumMoneticoPlugin\Form\Type\MoneticoGatewayConfigurationType
@@ -18,6 +20,8 @@ services:
     prometee.monetico.action.convert_payment_preprend:
         public: true
         class: Prometee\SyliusPayumMoneticoPlugin\Action\SyliusConvertAction
+        arguments:
+            - "@prometee.monetico.builder.context"
         tags:
             - { name: payum.action, factory: monetico, alias: sylius.monetico.convert_payment_preprend, prepend: true }
             

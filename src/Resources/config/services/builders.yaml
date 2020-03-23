@@ -1,0 +1,8 @@
+services:
+    prometee.monetico.builder.address:
+        class: Prometee\SyliusPayumMoneticoPlugin\Builder\AddressBuilder
+
+    prometee.monetico.builder.context:
+        class: Prometee\SyliusPayumMoneticoPlugin\Builder\ContextBuilder
+        arguments:
+            - "@prometee.monetico.builder.address"
