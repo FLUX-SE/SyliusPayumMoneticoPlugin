@@ -55,6 +55,11 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
 
         $model = ArrayObject::ensureArrayObject($payment->getDetails());
 
+        //If there is a new token, clear all details
+        if (isset($model['success_url']) && basename($model['success_url']) !== $request->getToken()->getHash()) {
+            $model = new ArrayObject();
+        }
+
         if (false == $model['amount']) {
             $this->setAmount($model, $payment);
         }
@@ -72,7 +77,7 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
         }
 
         if (false == $model['context']) {
-            $model['context'] = $this->contextBuilder->build($payment);
+            $this->setContext($model, $payment);
         }
 
         $request->setResult((array)$model);
@@ -118,7 +123,8 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
     {
         // The ID should be always unique so we can use it,
         // but we can also use Unix timestamp to get a really uniq value
-        $model['reference'] = sprintf(static::PAYMENT_ID_FORMAT, $payment->getId());
+//        $model['reference'] = sprintf(static::PAYMENT_ID_FORMAT, $payment->getId());
+        $model['reference'] = substr(uniqid(), 0, 12);
     }
 
     /**
@@ -145,5 +151,14 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
         if (null !== $customer = $order->getCustomer()) {
             $model['email'] = $customer->getEmail();
         }
+    }
+
+    /**
+     * @param ArrayObject $model
+     * @param PaymentInterface $payment
+     */
+    protected function setContext(ArrayObject $model, PaymentInterface $payment): void
+    {
+        $model['context'] = $this->contextBuilder->build($payment);
     }
 }
