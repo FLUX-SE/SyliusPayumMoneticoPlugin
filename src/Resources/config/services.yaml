@@ -17,6 +17,12 @@ services:
             - { name: payum.gateway_factory_builder, factory: monetico }
 
     #PayumActions for Sylius
+    prometee.monetico.action.capture_payment_preprend:
+        public: true
+        class: Prometee\SyliusPayumMoneticoPlugin\Action\SyliusCaptureAction
+        tags:
+            - { name: payum.action, factory: monetico, alias: sylius.monetico.capture_payment_preprend, prepend: true }
+
     prometee.monetico.action.convert_payment_preprend:
         public: true
         class: Prometee\SyliusPayumMoneticoPlugin\Action\SyliusConvertAction
@@ -24,6 +30,12 @@ services:
             - "@prometee.monetico.builder.context"
         tags:
             - { name: payum.action, factory: monetico, alias: sylius.monetico.convert_payment_preprend, prepend: true }
+
+    prometee.monetico.action.status_payment_preprend:
+        public: true
+        class: Prometee\SyliusPayumMoneticoPlugin\Action\SyliusStatusAction
+        tags:
+            - { name: payum.action, factory: monetico, alias: sylius.monetico.status_payment_preprend, prepend: true }
             
     #Monetico notify
     Prometee\SyliusPayumMoneticoPlugin\Controller\NotifyController:

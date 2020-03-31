@@ -4,35 +4,37 @@
 namespace Prometee\SyliusPayumMoneticoPlugin\Builder;
 
 
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
-use Webmozart\Assert\Assert;
 
-class ContextBuilder implements BuilderInterface
+class ContextBuilder implements ContextBuilderInterface
 {
     /** @var AddressBuilder */
     protected $addressBuilder;
 
     /**
      * ContextBuilder constructor.
-     * @param AddressBuilder $addressBuilder
+     * @param AddressBuilderInterface $addressBuilder
      */
-    public function __construct(AddressBuilder $addressBuilder)
+    public function __construct(AddressBuilderInterface $addressBuilder)
     {
         $this->addressBuilder = $addressBuilder;
     }
 
-    public function build($payload)
+    /**
+     * @inheritDoc
+     */
+    public function build(PaymentInterface $payment): array
     {
-        Assert::isInstanceOf($payload, PaymentInterface::class);
-
-        /** @var PaymentInterface $payload */
-
         $context = [];
 
-        $billingAddress = $payload->getOrder()->getBillingAddress();
+        /** @var OrderInterface $order */
+        $order = $payment->getOrder();
+
+        $billingAddress = $order->getBillingAddress();
         $context['billing'] = $this->addressBuilder->build($billingAddress);
 
-        $shippingAddress = $payload->getOrder()->getBillingAddress();
+        $shippingAddress = $order->getShippingAddress();
         $context['shipping'] = $this->addressBuilder->build($shippingAddress);
 
         return $context;
