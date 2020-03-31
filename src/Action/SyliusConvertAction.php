@@ -25,8 +25,6 @@ use Sylius\Component\Core\Model\PaymentInterface;
  */
 class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
 {
-    public const PAYMENT_ID_FORMAT = 'sylius%s';
-
     use GatewayAwareTrait;
 
     /** @var ContextBuilder */
@@ -123,7 +121,6 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
     {
         // The ID should be always unique so we can use it,
         // but we can also use Unix timestamp to get a really uniq value
-//        $model['reference'] = sprintf(static::PAYMENT_ID_FORMAT, $payment->getId());
         $model['reference'] = substr(uniqid(), 0, 12);
     }
 

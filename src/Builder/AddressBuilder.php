@@ -5,26 +5,24 @@ namespace Prometee\SyliusPayumMoneticoPlugin\Builder;
 
 
 use Sylius\Component\Core\Model\AddressInterface;
-use Webmozart\Assert\Assert;
 
-class AddressBuilder implements BuilderInterface
+class AddressBuilder implements AddressBuilderInterface
 {
-    public function build($payload)
+    /**
+     * @inheritDoc
+     */
+    public function build(AddressInterface $address): array
     {
-        Assert::isInstanceOf($payload, AddressInterface::class);
+        $result = [];
 
-        /** @var AddressInterface $payload */
+        $result['firstName'] = $address->getFirstName();
+        $result['lastName'] = $address->getLastName();
+        $result['addressLine1'] = $address->getStreet();
+        $result['city'] = $address->getCity();
+        $result['postalCode'] = $address->getPostcode();
+        $result['country'] = $address->getCountryCode();
+        $result['stateOrProvince'] = $address->getProvinceCode();
 
-        $address = [];
-
-        $address['firstName'] = $payload->getFirstName();
-        $address['lastName'] = $payload->getLastName();
-        $address['addressLine1'] = $payload->getStreet();
-        $address['city'] = $payload->getCity();
-        $address['postalCode'] = $payload->getPostcode();
-        $address['country'] = $payload->getCountryCode();
-        $address['stateOrProvince'] = $payload->getProvinceCode();
-
-        return $address;
+        return $result;
     }
 }
