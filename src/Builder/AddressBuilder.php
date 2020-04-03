@@ -15,11 +15,11 @@ class AddressBuilder implements AddressBuilderInterface
     {
         $result = [];
 
-        $result['firstName'] = $address->getFirstName();
-        $result['lastName'] = $address->getLastName();
-        $result['addressLine1'] = $address->getStreet();
-        $result['city'] = $address->getCity();
-        $result['postalCode'] = $address->getPostcode();
+        $result['firstName'] = substr($address->getFirstName(), 0, 45);
+        $result['lastName'] = substr($address->getLastName(),0,45);
+        $result['addressLine1'] = substr($address->getStreet(), 0, 50);
+        $result['city'] = substr($address->getCity(), 0, 50);
+        $result['postalCode'] = substr($address->getPostcode(), 0, 10);
         $result['country'] = $address->getCountryCode();
         $result['stateOrProvince'] = $address->getProvinceCode();
 
