@@ -9,7 +9,6 @@
 namespace Prometee\SyliusPayumMoneticoPlugin\Action;
 
 
-use Sylius\Component\Core\Model\PaymentInterface;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
@@ -17,6 +16,8 @@ use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Convert;
 use Payum\Core\Request\GetCurrency;
+use Prometee\SyliusPayumMoneticoPlugin\Builder\ContextBuilder;
+use Sylius\Component\Core\Model\PaymentInterface;
 
 /**
  * Class SyliusConvertAction
@@ -24,9 +25,19 @@ use Payum\Core\Request\GetCurrency;
  */
 class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
 {
-    public const PAYMENT_ID_FORMAT = 'sylius_%s';
-
     use GatewayAwareTrait;
+
+    /** @var ContextBuilder */
+    protected $contextBuilder;
+
+    /**
+     * SyliusConvertAction constructor.
+     * @param ContextBuilder $contextBuilder
+     */
+    public function __construct(ContextBuilder $contextBuilder)
+    {
+        $this->contextBuilder = $contextBuilder;
+    }
 
     /**
      * {@inheritDoc}
@@ -42,6 +53,11 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
 
         $model = ArrayObject::ensureArrayObject($payment->getDetails());
 
+        //If there is a new token, clear all details
+        if (isset($model['success_url']) && basename($model['success_url']) !== $request->getToken()->getHash()) {
+            $model = new ArrayObject();
+        }
+
         if (false == $model['amount']) {
             $this->setAmount($model, $payment);
         }
@@ -56,6 +72,10 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
 
         if (false == $model['email']) {
             $this->setEmail($model, $payment);
+        }
+
+        if (false == $model['context']) {
+            $this->setContext($model, $payment);
         }
 
         $request->setResult((array)$model);
@@ -101,7 +121,7 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
     {
         // The ID should be always unique so we can use it,
         // but we can also use Unix timestamp to get a really uniq value
-        $model['reference'] = sprintf(static::PAYMENT_ID_FORMAT, $payment->getId());
+        $model['reference'] = substr(uniqid(), 0, 12);
     }
 
     /**
@@ -128,5 +148,14 @@ class SyliusConvertAction implements ActionInterface, GatewayAwareInterface
         if (null !== $customer = $order->getCustomer()) {
             $model['email'] = $customer->getEmail();
         }
+    }
+
+    /**
+     * @param ArrayObject $model
+     * @param PaymentInterface $payment
+     */
+    protected function setContext(ArrayObject $model, PaymentInterface $payment): void
+    {
+        $model['context'] = $this->contextBuilder->build($payment);
     }
 }

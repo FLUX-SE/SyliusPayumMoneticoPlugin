@@ -6,12 +6,9 @@ use Ekyna\Component\Payum\Monetico\Api\Api;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class MoneticoGatewayConfigurationType extends AbstractType
 {
@@ -27,14 +24,6 @@ final class MoneticoGatewayConfigurationType extends AbstractType
                 'choices' => [
                     'prometee.monetico.mode.production' => Api::MODE_PRODUCTION,
                     'prometee.monetico.mode.test' => Api::MODE_TEST
-                ],
-            ])
-            ->add('bank', ChoiceType::class, [
-                'label' => 'prometee.monetico.fields.bank.label',
-                'choices' => [
-                    'prometee.monetico.bank.cic' => Api::BANK_CIC,
-                    'prometee.monetico.bank.cm' => Api::BANK_CM,
-                    'prometee.monetico.bank.obc' => Api::BANK_OBC
                 ],
             ])
             ->add('tpe', TextType::class, [

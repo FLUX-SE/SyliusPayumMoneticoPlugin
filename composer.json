@@ -4,7 +4,7 @@
   "type": "sylius-plugin",
   "require": {
     "sylius/sylius": "^1.2",
-    "ekyna/payum-monetico": "^1.5"
+    "ekyna/payum-monetico": "^1.5.3"
   },
   "license": "MIT",
   "authors": [
