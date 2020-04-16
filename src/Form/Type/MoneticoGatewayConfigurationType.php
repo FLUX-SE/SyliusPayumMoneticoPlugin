@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Prometee\SyliusPayumMoneticoPlugin\Form\Type;
 
 use Ekyna\Component\Payum\Monetico\Api\Api;
@@ -15,7 +17,7 @@ final class MoneticoGatewayConfigurationType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('mode', ChoiceType::class, [
@@ -23,7 +25,7 @@ final class MoneticoGatewayConfigurationType extends AbstractType
                 'label' => 'prometee.monetico.fields.mode.label',
                 'choices' => [
                     'prometee.monetico.mode.production' => Api::MODE_PRODUCTION,
-                    'prometee.monetico.mode.test' => Api::MODE_TEST
+                    'prometee.monetico.mode.test' => Api::MODE_TEST,
                 ],
             ])
             ->add('tpe', TextType::class, [
@@ -32,12 +34,12 @@ final class MoneticoGatewayConfigurationType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'prometee.monetico.tpe.not_blank',
-                        'groups' => ['sylius']
+                        'groups' => ['sylius'],
                     ]),
                     new Length([
                         'groups' => ['sylius'],
                         'min' => 7,
-                        'max' => 7
+                        'max' => 7,
                     ]),
                 ],
             ])
@@ -46,12 +48,12 @@ final class MoneticoGatewayConfigurationType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'prometee.monetico.key.not_blank',
-                        'groups' => ['sylius']
+                        'groups' => ['sylius'],
                     ]),
                     new Length([
                         'groups' => ['sylius'],
-                        'max' => 40
-                    ])
+                        'max' => 40,
+                    ]),
                 ],
             ])
             ->add('company', TextType::class, [
@@ -60,19 +62,14 @@ final class MoneticoGatewayConfigurationType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'prometee.monetico.company.not_blank',
-                        'groups' => ['sylius']
+                        'groups' => ['sylius'],
                     ]),
                     new Length([
                         'groups' => ['sylius'],
-                        'max' => 20
-                    ])
+                        'max' => 20,
+                    ]),
                 ],
             ])
-            /*->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-                $data = $event->getData();
-                $data['payum.http_client'] = '@prometee.monetico.bridge.monetico_bridge';
-                $event->setData($data);
-            })*/
         ;
     }
 }

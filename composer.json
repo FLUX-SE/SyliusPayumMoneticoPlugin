@@ -1,26 +1,58 @@
 {
   "name": "prometee/sylius-payum-monetico-plugin",
-  "description": "Payum Monetico Bridge for Sylius",
+  "description": "Payum Monetico gateway plugin for Sylius",
   "type": "sylius-plugin",
+  "license": "MIT",
   "require": {
-    "sylius/sylius": "^1.2",
+    "sylius/sylius": "^1.5",
     "ekyna/payum-monetico": "^1.5.3"
   },
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Francis Hilaire",
-      "email": "Prometee@users.noreply.github.com"
-    }
-  ],
+  "require-dev": {
+    "ext-json": "*",
+    "behat/behat": "^3.4",
+    "behat/mink": "^1.7@dev",
+    "behat/mink-browserkit-driver": "^1.3",
+    "behat/mink-extension": "^2.2",
+    "behat/mink-selenium2-driver": "^1.3",
+    "friends-of-behat/page-object-extension": "^0.3",
+    "friends-of-behat/suite-settings-extension": "^1.0",
+    "friends-of-behat/symfony-extension": "^2.0",
+    "friends-of-behat/variadic-extension": "^1.1",
+    "lakion/mink-debug-extension": "^1.2.3",
+    "phpspec/phpspec": "^6.0",
+    "phpstan/extension-installer": "^1.0",
+    "phpstan/phpstan": "^0.12.0",
+    "phpstan/phpstan-doctrine": "^0.12.0",
+    "phpstan/phpstan-strict-rules": "^0.12.0",
+    "phpstan/phpstan-webmozart-assert": "^0.12.0",
+    "phpunit/phpunit": "^8.0",
+    "sensiolabs/security-checker": "^6.0",
+    "sylius-labs/coding-standard": "^3.1",
+    "symfony/browser-kit": "^4.4",
+    "symfony/debug-bundle": "^4.4",
+    "symfony/dotenv": "^4.4",
+    "symfony/intl": "^4.4",
+    "symfony/web-profiler-bundle": "^4.4"
+  },
+  "prefer-stable": true,
   "autoload": {
+    "psr-4": { "Prometee\\SyliusPayumMoneticoPlugin\\": "src/" }
+  },
+  "autoload-dev": {
     "psr-4": {
-      "Prometee\\SyliusPayumMoneticoPlugin\\": "src/"
+      "Tests\\Prometee\\SyliusPayumMoneticoPlugin\\": "tests/",
+      "Tests\\Prometee\\SyliusPayumMoneticoPlugin\\App\\": "tests/Application/src/"
     }
   },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0-dev"
     }
-  }
+  },
+  "authors": [
+    {
+      "name": "Francis HILAIRE",
+      "email": "Prometee@users.noreply.github.com"
+    }
+  ]
 }

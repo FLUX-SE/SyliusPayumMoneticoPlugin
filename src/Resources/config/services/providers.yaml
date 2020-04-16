@@ -1,0 +1,14 @@
+services:
+    prometee.monetico.provider.reference:
+        class: Prometee\SyliusPayumMoneticoPlugin\Provider\ReferenceProvider
+
+    prometee.monetico.provider.comment:
+        class: Prometee\SyliusPayumMoneticoPlugin\Provider\CommentProvider
+
+    prometee.monetico.provider.address:
+        class: Prometee\SyliusPayumMoneticoPlugin\Provider\AddressProvider
+
+    prometee.monetico.provider.context:
+        class: Prometee\SyliusPayumMoneticoPlugin\Provider\ContextProvider
+        arguments:
+            - "@prometee.monetico.provider.address"

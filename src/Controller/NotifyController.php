@@ -1,32 +1,40 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: prometee
- * Date: 21/10/2018
- * Time: 23:11
- */
+
+declare(strict_types=1);
 
 namespace Prometee\SyliusPayumMoneticoPlugin\Controller;
-
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Ekyna\Component\Payum\Monetico\Api\Api;
-use Payum\Bundle\PayumBundle\Controller\PayumController;
+use Payum\Core\Exception\LogicException;
+use Payum\Core\Payum;
 use Payum\Core\Request\Notify;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class NotifyController extends PayumController
+final class NotifyController
 {
-    /**
-     * @param Request $request
-     * @return Response
-     */
-    public function doAction(Request $request) {
+    /** @var EntityRepository */
+    private $paymentRepository;
+
+    /** @var Payum */
+    private $payum;
+
+    public function __construct(
+        EntityRepository $paymentRepository,
+        Payum $payum
+    ) {
+        $this->paymentRepository = $paymentRepository;
+        $this->payum = $payum;
+    }
+
+    public function doAction(Request $request): Response
+    {
         // Get the reference you set in your ConvertAction
         if (null === $reference = $request->request->get('reference')) {
             throw new NotFoundHttpException();
@@ -35,16 +43,15 @@ class NotifyController extends PayumController
         // Find your payment entity
         try {
             /** @var PaymentInterface $payment */
-            $payment = $this
-                ->get('sylius.repository.payment')
+            $payment = $this->paymentRepository
                 ->createQueryBuilder('p')
                 ->join('p.method', 'm')
                 ->join('m.gatewayConfig', 'gc')
                 ->where('p.details LIKE :reference')
                 ->andWhere('gc.factoryName = :factory_name')
                 ->setParameters([
-                    'reference'=>'%"reference":"'.$reference.'"%',
-                    'factory_name'=>'monetico'
+                    'reference' => '%"reference":_"' . $reference . '"%',
+                    'factory_name' => 'monetico',
                 ])
                 ->getQuery()->getSingleResult();
         } catch (NoResultException $e) {
@@ -61,15 +68,20 @@ class NotifyController extends PayumController
 
         /** @var PaymentMethodInterface $payment_method */
         $payment_method = $payment->getMethod();
-        $gateway_name = $payment_method->getGatewayConfig()->getGatewayName();
+        $gatewayConfig = $payment_method->getGatewayConfig();
+
+        if (null === $gatewayConfig) {
+            throw new LogicException('The gateway config should not be nul !');
+        }
+
+        $gateway_name = $gatewayConfig->getGatewayName();
 
         // Execute notify & status actions.
-        $gateway = $this->getPayum()->getGateway($gateway_name);
+        $gateway = $this->payum->getGateway($gateway_name);
         $gateway->execute(new Notify($payment));
 
         // We don't invalidate payment tokens because if the customer click on go back to the store
         // the token will not exists anymore so there will be a 404 error page
-        // let Sylius delete the token when it will be expired
 
         // Return expected response
         return new Response(Api::NOTIFY_SUCCESS);

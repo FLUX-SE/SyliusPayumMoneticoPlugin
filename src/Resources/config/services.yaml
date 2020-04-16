@@ -1,5 +1,5 @@
 imports:
-    - { resource: "./services/builders.yaml" }
+    - { resource: "./services/providers.yaml" }
 
 services:
     #Sylius
@@ -12,20 +12,26 @@ services:
     #Payum configs
     prometee.monetico.gateway_factory:
         class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
-        arguments: [Ekyna\Component\Payum\Monetico\MoneticoGatewayFactory]
+        arguments:
+            - Ekyna\Component\Payum\Monetico\MoneticoGatewayFactory
         tags:
             - { name: payum.gateway_factory_builder, factory: monetico }
 
-    #PayumActions for Sylius
-    prometee.monetico.action.convert_payment_preprend:
+    #PayumAction for Sylius
+    prometee.monetico.action.convert_payment:
         public: true
-        class: Prometee\SyliusPayumMoneticoPlugin\Action\SyliusConvertAction
+        class: Prometee\SyliusPayumMoneticoPlugin\Action\ConvertPaymentAction
         arguments:
-            - "@prometee.monetico.builder.context"
+            $contextProvider: '@prometee.monetico.provider.context'
+            $referenceProvider: '@prometee.monetico.provider.reference'
+            $commentProvider: '@prometee.monetico.provider.comment'
         tags:
-            - { name: payum.action, factory: monetico, alias: sylius.monetico.convert_payment_preprend, prepend: true }
-            
+            - { name: payum.action, factory: monetico, prepend: true }
+
     #Monetico notify
     Prometee\SyliusPayumMoneticoPlugin\Controller\NotifyController:
         public: true
         class: Prometee\SyliusPayumMoneticoPlugin\Controller\NotifyController
+        arguments:
+            $paymentRepository: '@sylius.repository.payment'
+            $payum: '@payum'

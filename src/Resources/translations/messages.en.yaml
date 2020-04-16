@@ -4,8 +4,6 @@ prometee:
     fields:
       mode:
         label: Mode
-      bank:
-        label: Bank
       tpe:
         label: TPE number
         help: Only numbers of 7 digits
@@ -17,7 +15,3 @@ prometee:
     mode:
       production: Production
       test: Test
-    bank:
-      cic: CIC - Crédit industriel et commercial
-      cm: CM - Crédit Mutuel
-      obc: OBC - Neuflize OBC
