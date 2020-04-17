@@ -43,13 +43,15 @@ prometee_sylius_payum_monetico_notify:
 
 ## Configuration
 
-### Monetico credentials
+### Monetico notify URL
 
 Contact Monetico to add a "notify URL" corresponding to the route named `prometee_sylius_payum_monetico_notify` example :
 
 ```
 https://my_domain.tld/monetico/notify
 ``` 
+
+### Monetico credentials
 
 Get your `TPE number`, your `KEY` and your `COMPANY` name on your Monetico merchant portal :
 
