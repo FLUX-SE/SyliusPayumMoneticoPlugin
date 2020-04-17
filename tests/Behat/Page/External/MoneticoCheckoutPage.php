@@ -31,9 +31,6 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
     /** @var RepositoryInterface */
     private $paymentRepository;
 
-    /**
-     * @param $minkParameters
-     */
     public function __construct(
         Session $session,
         $minkParameters,
@@ -58,7 +55,7 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
     {
         $captureToken = $this->findToken(false);
 
-        $this->getDriver()->visit($captureToken->getAfterUrl());
+        $this->getDriver()->visit($captureToken->getTargetUrl());
     }
 
     /**
@@ -74,7 +71,8 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
             'mode' => Api::MODE_TEST,
         ]);
 
-        $postData['reference'] = $this->retrieveReference();
+        $captureToken = $this->findToken(false);
+        $postData['reference'] = $this->retrieveReference($captureToken);
 
         ksort($postData);
         $postData['MAC'] = $api->computeMac($postData);
@@ -106,9 +104,8 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
         return 'https://www.monetico-paiement.fr';
     }
 
-    private function retrieveReference(): string
+    private function retrieveReference(TokenInterface $captureToken): string
     {
-        $captureToken = $this->findToken(false);
         $identity = $captureToken->getDetails();
 
         /** @var PaymentInterface $payment */

@@ -84,35 +84,11 @@ class MoneticoShopContext extends MinkContext implements Context
     }
 
     /**
-     * @When I cancel my Monetico payment
+     * @Given I have clicked on "go back" during my Monetico payment
      * @When I click on "go back" during my Monetico payment
-     * @Given I have cancelled Monetico payment
      */
     public function iCancelMyMoneticoPayment()
     {
-        $postData = [
-            'TPE' => MoneticoContext::TPE,
-            'date' => '05/10/2011_a_15:33:06',
-            'montant' => '19.99USD',
-            'texte-libre' => 'Ceci est un test, ne pas tenir compte.',
-            'code-retour' => 'Annulation',
-            'cvx' => 'oui',
-            'vld' => '0912',
-            'brand' => 'MC',
-            'status3ds' => '-1',
-            'motifrefus' => 'filtrage',
-            'originecb' => 'FRA',
-            'bincb' => '513283',
-            'hpancb' => '764AD24CFABBB818E8A7DC61D4D6B4B89EA837ED',
-            'ipclient' => '10.45.166.76',
-            'originetr' => 'inconnue',
-            'veres' => '',
-            'pares' => '',
-            'filtragecause' => '4-',
-            'filtragevaleur' => 'FRA',
-        ];
-
-        $this->paymentPage->notify($postData);
         $this->paymentPage->capture();
     }
 

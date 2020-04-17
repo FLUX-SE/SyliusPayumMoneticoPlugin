@@ -1,4 +1,6 @@
 imports:
+    - { resource: "./services/actions.yaml" }
+    - { resource: "./services/extensions.yaml" }
     - { resource: "./services/providers.yaml" }
 
 services:
@@ -16,17 +18,6 @@ services:
             - Ekyna\Component\Payum\Monetico\MoneticoGatewayFactory
         tags:
             - { name: payum.gateway_factory_builder, factory: monetico }
-
-    #PayumAction for Sylius
-    prometee.monetico.action.convert_payment:
-        public: true
-        class: Prometee\SyliusPayumMoneticoPlugin\Action\ConvertPaymentAction
-        arguments:
-            $contextProvider: '@prometee.monetico.provider.context'
-            $referenceProvider: '@prometee.monetico.provider.reference'
-            $commentProvider: '@prometee.monetico.provider.comment'
-        tags:
-            - { name: payum.action, factory: monetico, prepend: true }
 
     #Monetico notify
     Prometee\SyliusPayumMoneticoPlugin\Controller\NotifyController:

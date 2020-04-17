@@ -38,7 +38,6 @@ Enable the required route for Monetico notify :
 
 prometee_sylius_payum_monetico_notify:
   resource: "@PrometeeSyliusPayumMoneticoPlugin/Resources/config/routing/notify.yaml"
-
 ```
 
 ## Configuration
