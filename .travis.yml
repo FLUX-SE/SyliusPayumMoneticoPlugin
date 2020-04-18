@@ -7,7 +7,6 @@ dist: xenial
 services:
   - mysql
   - xvfb
-  - memcached
 
 addons:
   chrome: stable

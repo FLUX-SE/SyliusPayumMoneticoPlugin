@@ -9,6 +9,7 @@ use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Mink\Session;
 use Ekyna\Component\Payum\Monetico\Api\Api;
 use FriendsOfBehat\PageObjectExtension\Page\Page;
+use LogicException;
 use Payum\Core\Security\TokenInterface;
 use RuntimeException;
 use Sylius\Component\Core\Model\PaymentInterface;
@@ -78,6 +79,9 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
         $postData['MAC'] = $api->computeMac($postData);
 
         $this->client->request('POST', $this->moneticoNotifyPage->getAbsoluteUrl(), $postData);
+        if ($this->client->getResponse()->getStatusCode() !== 200) {
+            throw new LogicException('Notify Request fail, see logs for more info !');
+        }
     }
 
     private function findToken(bool $afterType = true): TokenInterface

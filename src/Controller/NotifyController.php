@@ -50,7 +50,7 @@ final class NotifyController
                 ->where('p.details LIKE :reference')
                 ->andWhere('gc.factoryName = :factory_name')
                 ->setParameters([
-                    'reference' => '%"reference":_"' . $reference . '"%',
+                    'reference' => '%"reference":%"' . $reference . '"%',
                     'factory_name' => 'monetico',
                 ])
                 ->getQuery()->getSingleResult();

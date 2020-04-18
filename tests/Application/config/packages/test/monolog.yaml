@@ -4,3 +4,7 @@ monolog:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.log"
             level: error
+        main_debug:
+            type: stream
+            path: "%kernel.project_dir%/../../etc/build/%kernel.environment%.log"
+            level: error
