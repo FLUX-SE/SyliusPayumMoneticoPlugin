@@ -17,7 +17,20 @@ final class AddressProvider implements AddressProviderInterface
 
         $result['firstName'] = $address->getFirstName();
         $result['lastName'] = $address->getLastName();
-        $result['addressLine1'] = $address->getStreet();
+
+        $result['address'] = $address->getStreet();
+
+        // addressLine* are required by `ekyna/payum-monetico`
+        // but not by the Monetico documentation apparently
+        $addressLines = $this->splitWords($address->getStreet());
+        $result['addressLine1'] = $addressLines[0];
+        if (isset($addressLines[1])) {
+            $result['addressLine2'] = $addressLines[1];
+        }
+        if (isset($addressLines[2])) {
+            $result['addressLine3'] = $addressLines[2];
+        }
+
         $result['city'] = $address->getCity();
         $result['postalCode'] = $address->getPostcode();
         $result['country'] = $address->getCountryCode();
@@ -29,7 +42,7 @@ final class AddressProvider implements AddressProviderInterface
     /**
      * @return string[]
      */
-    private function splitWords(string $text, int $width): array
+    private function splitWords(string $text, int $width = 50): array
     {
         $words = explode(' ', $text);
         $text = '';

@@ -29,7 +29,7 @@ class CommentProvider implements CommentProviderInterface
         $userComment = '';
         $user = $order->getUser();
         if (null !== $user) {
-            $customerComment = sprintf(', User: %s', $user->getId());
+            $userComment = sprintf(', User: %s', $user->getId());
         }
 
         return sprintf('Order: %s%s%s',

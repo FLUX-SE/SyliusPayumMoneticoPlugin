@@ -49,9 +49,11 @@ final class NotifyController
                 ->join('m.gatewayConfig', 'gc')
                 ->where('p.details LIKE :reference')
                 ->andWhere('gc.factoryName = :factory_name')
+                ->andWhere('p.state = :state')
                 ->setParameters([
                     'reference' => '%"reference":%"' . $reference . '"%',
                     'factory_name' => 'monetico',
+                    'state', PaymentInterface::STATE_NEW,
                 ])
                 ->getQuery()->getSingleResult();
         } catch (NoResultException $e) {
