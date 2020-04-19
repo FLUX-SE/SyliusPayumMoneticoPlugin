@@ -53,7 +53,7 @@ final class NotifyController
                 ->setParameters([
                     'reference' => '%"reference":%"' . $reference . '"%',
                     'factory_name' => 'monetico',
-                    'state', PaymentInterface::STATE_NEW,
+                    'state' => PaymentInterface::STATE_NEW,
                 ])
                 ->getQuery()->getSingleResult();
         } catch (NoResultException $e) {
