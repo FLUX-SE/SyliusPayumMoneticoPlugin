@@ -9,9 +9,6 @@ use Sylius\Component\Core\Model\PaymentInterface;
 
 class CommentProvider implements CommentProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getComment(PaymentInterface $payment): string
     {
         $order = $payment->getOrder();
@@ -23,17 +20,21 @@ class CommentProvider implements CommentProviderInterface
         $customerComment = '';
         $customer = $order->getCustomer();
         if (null !== $customer) {
-            $customerComment = sprintf(', Customer: %s', $customer->getId());
+            $customerId = (int) $customer->getId();
+            $customerComment = sprintf(', Customer: %s', $customerId);
         }
 
         $userComment = '';
         $user = $order->getUser();
         if (null !== $user) {
-            $userComment = sprintf(', User: %s', $user->getId());
+            $userId = (int) $user->getId();
+            $userComment = sprintf(', User: %s', $userId);
         }
 
+        $orderNumber = $order->getNumber() ?? '';
+
         return sprintf('Order: %s%s%s',
-            $order->getNumber(),
+            $orderNumber,
             $customerComment,
             $userComment
         );

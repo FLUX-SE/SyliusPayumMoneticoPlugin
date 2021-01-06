@@ -16,6 +16,7 @@ use Prometee\SyliusPayumMoneticoPlugin\Provider\CommentProviderInterface;
 use Prometee\SyliusPayumMoneticoPlugin\Provider\ContextProviderInterface;
 use Prometee\SyliusPayumMoneticoPlugin\Provider\ReferenceProviderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
+use Webmozart\Assert\Assert;
 
 final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterface
 {
@@ -40,11 +41,7 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
         $this->commentProvider = $commentProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @param Convert $request
-     */
+    /** @param Convert $request */
     public function execute($request): void
     {
         RequestNotSupportedException::assertSupports($this, $request);
@@ -83,7 +80,9 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
 
     private function setAmount(ArrayObject $model, PaymentInterface $payment): void
     {
-        $currency = new GetCurrency($payment->getCurrencyCode());
+        $currencyCode = $payment->getCurrencyCode();
+        Assert::notNull($currencyCode);
+        $currency = new GetCurrency($currencyCode);
         $this->gateway->execute($currency);
         $amount = $payment->getAmount() ?? 0;
 
@@ -113,9 +112,6 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports($request): bool
     {
         return $request instanceof Convert

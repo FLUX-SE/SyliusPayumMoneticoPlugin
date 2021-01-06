@@ -17,11 +17,7 @@ class CancelAction implements ActionInterface, GatewayAwareInterface
 {
     use GatewayAwareTrait;
 
-    /**
-     * {@inheritdoc}
-     *
-     * @param Cancel $request
-     */
+    /** @param Cancel $request */
     public function execute($request): void
     {
         RequestNotSupportedException::assertSupports($this, $request);
@@ -34,9 +30,6 @@ class CancelAction implements ActionInterface, GatewayAwareInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports($request): bool
     {
         return $request instanceof Cancel

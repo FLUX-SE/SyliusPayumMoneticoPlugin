@@ -14,25 +14,16 @@ use Payum\Core\Request\GetHttpRequest;
 
 class PaymentResponseExtension implements ExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function onPreExecute(Context $context): void
     {
         return;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onExecute(Context $context): void
     {
         return;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onPostExecute(Context $context): void
     {
         $request = $context->getRequest();

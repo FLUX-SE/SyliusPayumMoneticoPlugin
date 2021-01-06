@@ -36,15 +36,21 @@ final class NotifyController
     public function doAction(Request $request): Response
     {
         // Get the reference you set in your ConvertAction
-        if (null === $reference = $request->request->get('reference')) {
+        $reference = $request->request->get('reference');
+
+        if (null === $reference) {
             throw new NotFoundHttpException();
         }
 
+        if (false === is_string($reference)) {
+            throw new NotFoundHttpException();
+        }
+
+        $queryBuilder = $this->paymentRepository->createQueryBuilder('p');
         // Find your payment entity
         try {
             /** @var PaymentInterface $payment */
-            $payment = $this->paymentRepository
-                ->createQueryBuilder('p')
+            $payment = $queryBuilder
                 ->join('p.method', 'm')
                 ->join('m.gatewayConfig', 'gc')
                 ->where('p.details LIKE :reference')

@@ -1,6 +1,6 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
-[![Build Status][ico-travis]][link-travis]
+[![Build Status][ico-github-actions]][link-github-actions]
 [![Quality Score][ico-code-quality]][link-code-quality]
 
 ## Sylius Payum Monetico gateway plugin
@@ -86,10 +86,10 @@ Then a form will be displayed, fill-in the required fields :
 
 [ico-version]: https://img.shields.io/packagist/v/Prometee/sylius-payum-monetico-plugin.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/Prometee/SyliusPayumMoneticoPlugin/master.svg?style=flat-square
+[ico-github-actions]: https://github.com/Prometee/SyliusPayumMoneticoPlugin/workflows/Build/badge.svg
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/Prometee/SyliusPayumMoneticoPlugin.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/prometee/sylius-payum-monetico-plugin
-[link-travis]: https://travis-ci.org/Prometee/SyliusPayumMoneticoPlugin
+[link-github-actions]: https://github.com/Prometee/SyliusPayumMoneticoPlugin/actions?query=workflow%3A"Build"
 [link-scrutinizer]: https://scrutinizer-ci.com/g/Prometee/SyliusPayumMoneticoPlugin/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/Prometee/SyliusPayumMoneticoPlugin

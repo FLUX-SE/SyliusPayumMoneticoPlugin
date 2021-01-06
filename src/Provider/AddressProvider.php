@@ -8,9 +8,6 @@ use Sylius\Component\Core\Model\AddressInterface;
 
 final class AddressProvider implements AddressProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getAddress(AddressInterface $address): array
     {
         $result = [];
@@ -18,11 +15,12 @@ final class AddressProvider implements AddressProviderInterface
         $result['firstName'] = $address->getFirstName();
         $result['lastName'] = $address->getLastName();
 
-        $result['address'] = $address->getStreet();
+        $street = $address->getStreet() ?? '';
+        $result['address'] = $street;
 
         // addressLine* are required by `ekyna/payum-monetico`
         // but not by the Monetico documentation apparently
-        $addressLines = $this->splitWords($address->getStreet());
+        $addressLines = $this->splitWords($street);
         $result['addressLine1'] = $addressLines[0];
         if (isset($addressLines[1])) {
             $result['addressLine2'] = $addressLines[1];
@@ -39,9 +37,7 @@ final class AddressProvider implements AddressProviderInterface
         return $result;
     }
 
-    /**
-     * @return string[]
-     */
+    /** @return string[] */
     private function splitWords(string $text, int $width = 50): array
     {
         $words = explode(' ', $text);

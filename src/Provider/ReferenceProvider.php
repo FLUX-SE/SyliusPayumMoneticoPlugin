@@ -8,9 +8,6 @@ use Sylius\Component\Core\Model\PaymentInterface;
 
 final class ReferenceProvider implements ReferenceProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getReference(PaymentInterface $payment): string
     {
         /**
