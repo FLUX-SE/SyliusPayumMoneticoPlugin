@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Prometee\SyliusPayumMoneticoPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Ekyna\Component\Payum\Monetico\Api\Api;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\ExampleFactoryInterface;
@@ -29,14 +29,14 @@ class MoneticoContext implements Context
     /** @var ExampleFactoryInterface */
     private $paymentMethodExampleFactory;
 
-    /** @var ObjectManager */
+    /** @var EntityManagerInterface */
     private $paymentMethodManager;
 
     public function __construct(
         SharedStorageInterface $sharedStorage,
         PaymentMethodRepositoryInterface $paymentMethodRepository,
         ExampleFactoryInterface $paymentMethodExampleFactory,
-        ObjectManager $paymentMethodManager
+        EntityManagerInterface $paymentMethodManager
     ) {
         $this->sharedStorage = $sharedStorage;
         $this->paymentMethodRepository = $paymentMethodRepository;
