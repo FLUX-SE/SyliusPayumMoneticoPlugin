@@ -1,5 +1,5 @@
 flux_se:
-  monetico:
+  sylius_payum_monetico:
     tpe:
       not_blank: Le numéro de TPE ne peut pas être vide
     key:

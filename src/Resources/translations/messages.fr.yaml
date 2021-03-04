@@ -5,7 +5,7 @@ flux_se:
       mode:
         label: Mode
       tpe:
-        label: Nulméro de TPE
+        label: Numéro de TPE
         help: 7 chiffres uniquement
       key:
         label: KEY

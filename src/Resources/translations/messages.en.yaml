@@ -1,5 +1,5 @@
 flux_se:
-  monetico:
+  sylius_payum_monetico:
     gateway_label: Monetico paiement
     fields:
       mode:

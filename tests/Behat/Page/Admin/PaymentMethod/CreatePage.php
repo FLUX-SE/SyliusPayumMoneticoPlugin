@@ -10,8 +10,6 @@ use Sylius\Behat\Page\Admin\PaymentMethod\CreatePage as BaseCreatePage;
 final class CreatePage extends BaseCreatePage implements CreatePageInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws ElementNotFoundException
      */
     public function setMoneticoKey(string $key): void
@@ -20,8 +18,6 @@ final class CreatePage extends BaseCreatePage implements CreatePageInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws ElementNotFoundException
      */
     public function setMoneticoTpe(string $tpe): void
@@ -30,8 +26,6 @@ final class CreatePage extends BaseCreatePage implements CreatePageInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws ElementNotFoundException
      */
     public function setMoneticoCompany(string $company): void
@@ -40,8 +34,6 @@ final class CreatePage extends BaseCreatePage implements CreatePageInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws ElementNotFoundException
      */
     public function selectMoneticoMode(string $mode): void
@@ -49,9 +41,6 @@ final class CreatePage extends BaseCreatePage implements CreatePageInterface
         $this->getElement('monetico_mode')->selectOption($mode);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [

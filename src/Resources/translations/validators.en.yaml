@@ -1,5 +1,5 @@
 flux_se:
-  monetico:
+  sylius_payum_monetico:
     tpe:
       not_blank: TPE cannot be blank
     key:

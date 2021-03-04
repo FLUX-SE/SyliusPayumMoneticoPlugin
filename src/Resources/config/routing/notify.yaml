@@ -1,5 +1,5 @@
 flux_se_sylius_payum_monetico_notify:
     path: /monetico/notify
     defaults:
-        _controller: FluxSE\SyliusPayumMoneticoPlugin\Controller\NotifyController::doAction
+        _controller: flux_se.sylius_payum_monetico.controller.notify::doAction
     methods: [POST]
