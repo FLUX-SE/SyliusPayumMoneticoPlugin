@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Prometee\SyliusPayumMoneticoPlugin\Behat\Context\Setup;
+namespace Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Doctrine\ORM\EntityManagerInterface;

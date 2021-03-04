@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Prometee\SyliusPayumMoneticoPlugin\Behat\Context\Ui\Admin;
+namespace Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Ekyna\Component\Payum\Monetico\Api\Api;
 use FriendsOfBehat\PageObjectExtension\Page\UnexpectedPageException;
-use Tests\Prometee\SyliusPayumMoneticoPlugin\Behat\Context\Setup\MoneticoContext;
-use Tests\Prometee\SyliusPayumMoneticoPlugin\Behat\Page\Admin\PaymentMethod\CreatePageInterface;
+use Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Context\Setup\MoneticoContext;
+use Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\Admin\PaymentMethod\CreatePageInterface;
 
 class ManagingPaymentMethodsContext implements Context
 {

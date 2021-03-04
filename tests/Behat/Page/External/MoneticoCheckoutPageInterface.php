@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Prometee\SyliusPayumMoneticoPlugin\Behat\Page\External;
+namespace Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\External;
 
 use FriendsOfBehat\PageObjectExtension\Page\PageInterface;
 

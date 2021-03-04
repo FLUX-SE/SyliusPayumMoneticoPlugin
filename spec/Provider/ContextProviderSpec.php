@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace spec\Prometee\SyliusPayumMoneticoPlugin\Provider;
+namespace spec\FluxSE\SyliusPayumMoneticoPlugin\Provider;
 
 use PhpSpec\ObjectBehavior;
-use Prometee\SyliusPayumMoneticoPlugin\Provider\AddressProviderInterface;
-use Prometee\SyliusPayumMoneticoPlugin\Provider\ContextProvider;
-use Prometee\SyliusPayumMoneticoPlugin\Provider\ContextProviderInterface;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\AddressProviderInterface;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\ContextProvider;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\ContextProviderInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;

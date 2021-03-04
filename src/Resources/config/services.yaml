@@ -5,24 +5,24 @@ imports:
 
 services:
     #Sylius
-    prometee.monetico.form.type.gateway_configuration:
-        class: Prometee\SyliusPayumMoneticoPlugin\Form\Type\MoneticoGatewayConfigurationType
+    flux_se.sylius_payum_monetico.form.type.gateway_configuration:
+        class: FluxSE\SyliusPayumMoneticoPlugin\Form\Type\MoneticoGatewayConfigurationType
         tags:
-            - { name: sylius.gateway_configuration_type, type: monetico, label: prometee.monetico.gateway_label }
+            - { name: sylius.gateway_configuration_type, type: monetico, label: flux_se.sylius_payum_monetico.gateway_label }
             - { name: form.type }
 
     #Payum configs
-    prometee.monetico.gateway_factory:
+    flux_se.sylius_payum_monetico.gateway_factory:
         class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
         arguments:
-            - Ekyna\Component\Payum\Monetico\MoneticoGatewayFactory
+            $gatewayFactoryClass: Ekyna\Component\Payum\Monetico\MoneticoGatewayFactory
         tags:
             - { name: payum.gateway_factory_builder, factory: monetico }
 
     #Monetico notify
-    Prometee\SyliusPayumMoneticoPlugin\Controller\NotifyController:
+    flux_se.sylius_payum_monetico.controller.notify:
         public: true
-        class: Prometee\SyliusPayumMoneticoPlugin\Controller\NotifyController
+        class: FluxSE\SyliusPayumMoneticoPlugin\Controller\NotifyController
         arguments:
             $paymentRepository: '@sylius.repository.payment'
             $payum: '@payum'

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Prometee\SyliusPayumMoneticoPlugin\Extension;
+namespace FluxSE\SyliusPayumMoneticoPlugin\Extension;
 
 use ArrayAccess;
 use Ekyna\Component\Payum\Monetico\Action\Api\PaymentResponseAction;

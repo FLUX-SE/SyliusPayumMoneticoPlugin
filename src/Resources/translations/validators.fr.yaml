@@ -1,4 +1,4 @@
-prometee:
+flux_se:
   monetico:
     tpe:
       not_blank: Le numéro de TPE ne peut pas être vide

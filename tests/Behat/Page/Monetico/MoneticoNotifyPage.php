@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Prometee\SyliusPayumMoneticoPlugin\Behat\Page\Monetico;
+namespace Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\Monetico;
 
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 
@@ -18,6 +18,6 @@ class MoneticoNotifyPage extends SymfonyPage implements MoneticoNotifyPageInterf
 
     public function getRouteName(): string
     {
-        return 'prometee_sylius_payum_monetico_notify';
+        return 'flux_se_sylius_payum_monetico_notify';
     }
 }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace spec\Prometee\SyliusPayumMoneticoPlugin\Provider;
+namespace spec\FluxSE\SyliusPayumMoneticoPlugin\Provider;
 
 use PhpSpec\ObjectBehavior;
-use Prometee\SyliusPayumMoneticoPlugin\Provider\AddressProvider;
-use Prometee\SyliusPayumMoneticoPlugin\Provider\AddressProviderInterface;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\AddressProvider;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\AddressProviderInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 
 class AddressProviderSpec extends ObjectBehavior

@@ -1,4 +1,4 @@
 suites:
     main:
-        namespace: Prometee\SyliusPayumMoneticoPlugin
-        psr4_prefix: Prometee\SyliusPayumMoneticoPlugin
+        namespace: FluxSE\SyliusPayumMoneticoPlugin
+        psr4_prefix: FluxSE\SyliusPayumMoneticoPlugin

@@ -1,5 +1,5 @@
-prometee_sylius_payum_monetico_notify:
+flux_se_sylius_payum_monetico_notify:
     path: /monetico/notify
     defaults:
-        _controller: Prometee\SyliusPayumMoneticoPlugin\Controller\NotifyController::doAction
+        _controller: FluxSE\SyliusPayumMoneticoPlugin\Controller\NotifyController::doAction
     methods: [POST]

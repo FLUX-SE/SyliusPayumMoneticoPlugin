@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Prometee\SyliusPayumMoneticoPlugin\Behat\Page\Monetico;
+namespace Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\Monetico;
 
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPageInterface;
 

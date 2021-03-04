@@ -1,4 +1,4 @@
-prometee:
+flux_se:
   monetico:
     tpe:
       not_blank: TPE cannot be blank

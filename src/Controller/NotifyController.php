@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Prometee\SyliusPayumMoneticoPlugin\Controller;
+namespace FluxSE\SyliusPayumMoneticoPlugin\Controller;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;

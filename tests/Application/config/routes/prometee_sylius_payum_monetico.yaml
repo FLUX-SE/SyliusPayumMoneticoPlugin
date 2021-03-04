@@ -1,2 +1,2 @@
-prometee_sylius_payum_monetico_notify:
-  resource: "@PrometeeSyliusPayumMoneticoPlugin/Resources/config/routing/notify.yaml"
+flux_se_sylius_payum_monetico_notify:
+  resource: "@FluxSESyliusPayumMoneticoPlugin/Resources/config/routing/notify.yaml"

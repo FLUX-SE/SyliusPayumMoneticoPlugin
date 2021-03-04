@@ -12,6 +12,6 @@ parameters:
 
     ignoreErrors:
         - '/Parameter #1 \$configuration of method Symfony\\Component\\DependencyInjection\\Extension\\Extension::processConfiguration\(\) expects Symfony\\Component\\Config\\Definition\\ConfigurationInterface, Symfony\\Component\\Config\\Definition\\ConfigurationInterface\|null given\./'
-        - '/Parameter #1 \$request \(Payum\\Core\\Request\\Cancel\) of method Prometee\\SyliusPayumMoneticoPlugin\\Action\\CancelAction::execute\(\) should be contravariant with parameter \$request \(mixed\) of method Payum\\Core\\Action\\ActionInterface::execute\(\)/'
-        - '/Parameter #1 \$request \(Payum\\Core\\Request\\Convert\) of method Prometee\\SyliusPayumMoneticoPlugin\\Action\\ConvertPaymentAction::execute\(\) should be contravariant with parameter \$request \(mixed\) of method Payum\\Core\\Action\\ActionInterface::execute\(\)/'
-        - '/Parameter #1 \$request \(Payum\\Core\\Request\\Refund\) of method Prometee\\SyliusPayumMoneticoPlugin\\Action\\RefundAction::execute\(\) should be contravariant with parameter \$request \(mixed\) of method Payum\\Core\\Action\\ActionInterface::execute\(\)/'
+        - '/Parameter #1 \$request \(Payum\\Core\\Request\\Cancel\) of method FluxSE\\SyliusPayumMoneticoPlugin\\Action\\CancelAction::execute\(\) should be contravariant with parameter \$request \(mixed\) of method Payum\\Core\\Action\\ActionInterface::execute\(\)/'
+        - '/Parameter #1 \$request \(Payum\\Core\\Request\\Convert\) of method FluxSE\\SyliusPayumMoneticoPlugin\\Action\\ConvertPaymentAction::execute\(\) should be contravariant with parameter \$request \(mixed\) of method Payum\\Core\\Action\\ActionInterface::execute\(\)/'
+        - '/Parameter #1 \$request \(Payum\\Core\\Request\\Refund\) of method FluxSE\\SyliusPayumMoneticoPlugin\\Action\\RefundAction::execute\(\) should be contravariant with parameter \$request \(mixed\) of method Payum\\Core\\Action\\ActionInterface::execute\(\)/'

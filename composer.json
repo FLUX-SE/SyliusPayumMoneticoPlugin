@@ -1,5 +1,5 @@
 {
-  "name": "prometee/sylius-payum-monetico-plugin",
+  "name": "flux-se/sylius-payum-monetico-plugin",
   "description": "Payum Monetico gateway plugin for Sylius",
   "type": "sylius-plugin",
   "license": "MIT",
@@ -39,17 +39,17 @@
   },
   "prefer-stable": true,
   "autoload": {
-    "psr-4": { "Prometee\\SyliusPayumMoneticoPlugin\\": "src/" }
+    "psr-4": { "FluxSE\\SyliusPayumMoneticoPlugin\\": "src/" }
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\Prometee\\SyliusPayumMoneticoPlugin\\": "tests/",
-      "Tests\\Prometee\\SyliusPayumMoneticoPlugin\\App\\": "tests/Application/src/"
+      "Tests\\FluxSE\\SyliusPayumMoneticoPlugin\\": "tests/",
+      "Tests\\FluxSE\\SyliusPayumMoneticoPlugin\\App\\": "tests/Application/src/"
     }
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0-dev"
+      "dev-master": "1.1-dev"
     }
   },
   "authors": [

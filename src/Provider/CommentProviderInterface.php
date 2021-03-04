@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Prometee\SyliusPayumMoneticoPlugin\Provider;
+namespace FluxSE\SyliusPayumMoneticoPlugin\Provider;
 
 use Sylius\Component\Core\Model\PaymentInterface;
 

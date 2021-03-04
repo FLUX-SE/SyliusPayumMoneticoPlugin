@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace spec\Prometee\SyliusPayumMoneticoPlugin\Provider;
+namespace spec\FluxSE\SyliusPayumMoneticoPlugin\Provider;
 
 use PhpSpec\ObjectBehavior;
-use Prometee\SyliusPayumMoneticoPlugin\Provider\ReferenceProvider;
-use Prometee\SyliusPayumMoneticoPlugin\Provider\ReferenceProviderInterface;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\ReferenceProvider;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\ReferenceProviderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 
 class ReferenceProviderSpec extends ObjectBehavior

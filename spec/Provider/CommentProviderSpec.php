@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace spec\Prometee\SyliusPayumMoneticoPlugin\Provider;
+namespace spec\FluxSE\SyliusPayumMoneticoPlugin\Provider;
 
 use PhpSpec\ObjectBehavior;
-use Prometee\SyliusPayumMoneticoPlugin\Provider\CommentProvider;
-use Prometee\SyliusPayumMoneticoPlugin\Provider\CommentProviderInterface;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\CommentProvider;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\CommentProviderInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;

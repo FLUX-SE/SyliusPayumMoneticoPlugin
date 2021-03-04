@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Prometee\SyliusPayumMoneticoPlugin\Action;
+namespace FluxSE\SyliusPayumMoneticoPlugin\Action;
 
 use ArrayAccess;
 use Payum\Core\Action\ActionInterface;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Prometee\SyliusPayumMoneticoPlugin\Action;
+namespace FluxSE\SyliusPayumMoneticoPlugin\Action;
 
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
@@ -12,9 +12,9 @@ use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Convert;
 use Payum\Core\Request\GetCurrency;
-use Prometee\SyliusPayumMoneticoPlugin\Provider\CommentProviderInterface;
-use Prometee\SyliusPayumMoneticoPlugin\Provider\ContextProviderInterface;
-use Prometee\SyliusPayumMoneticoPlugin\Provider\ReferenceProviderInterface;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\CommentProviderInterface;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\ContextProviderInterface;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\ReferenceProviderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Webmozart\Assert\Assert;
 

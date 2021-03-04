@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Prometee\SyliusPayumMoneticoPlugin\Behat\Page\External;
+namespace Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\External;
 
 use Behat\Mink\Exception\DriverException;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
@@ -15,8 +15,8 @@ use RuntimeException;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
-use Tests\Prometee\SyliusPayumMoneticoPlugin\Behat\Context\Setup\MoneticoContext;
-use Tests\Prometee\SyliusPayumMoneticoPlugin\Behat\Page\Monetico\MoneticoNotifyPageInterface;
+use Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Context\Setup\MoneticoContext;
+use Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\Monetico\MoneticoNotifyPageInterface;
 
 final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInterface
 {

@@ -1,7 +1,7 @@
 services:
 
-  prometee.monetico.extension.payment_response:
+  flux_se.sylius_payum_monetico.extension.payment_response:
     public: true
-    class: Prometee\SyliusPayumMoneticoPlugin\Extension\PaymentResponseExtension
+    class: FluxSE\SyliusPayumMoneticoPlugin\Extension\PaymentResponseExtension
     tags:
       - { name: payum.extension, factory: monetico }

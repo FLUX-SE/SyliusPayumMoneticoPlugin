@@ -56,5 +56,5 @@ return [
     Sylius\Bundle\ApiBundle\SyliusApiBundle::class => ['all' => true],
     SyliusLabs\DoctrineMigrationsExtraBundle\SyliusLabsDoctrineMigrationsExtraBundle::class => ['all' => true],
     Symplify\ConsoleColorDiff\ConsoleColorDiffBundle::class => ['dev' => true, 'test' => true],
-    Prometee\SyliusPayumMoneticoPlugin\PrometeeSyliusPayumMoneticoPlugin::class => ['all' => true],
+    FluxSE\SyliusPayumMoneticoPlugin\FluxSESyliusPayumMoneticoPlugin::class => ['all' => true],
 ];

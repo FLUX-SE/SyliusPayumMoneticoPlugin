@@ -1,5 +1,5 @@
-prometee:
-  monetico:
+flux_se:
+  sylius_payum_monetico:
     gateway_label: Monetico paiement
     fields:
       mode:

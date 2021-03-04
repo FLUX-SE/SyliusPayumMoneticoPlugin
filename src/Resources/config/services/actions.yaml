@@ -1,23 +1,23 @@
 services:
 
-  prometee.monetico.action.cancel:
+  flux_se.sylius_payum_monetico.action.cancel:
     public: true
-    class: Prometee\SyliusPayumMoneticoPlugin\Action\CancelAction
+    class: FluxSE\SyliusPayumMoneticoPlugin\Action\CancelAction
     tags:
       - { name: payum.action, factory: monetico }
 
-  prometee.monetico.action.refund:
+  flux_se.sylius_payum_monetico.action.refund:
     public: true
-    class: Prometee\SyliusPayumMoneticoPlugin\Action\RefundAction
+    class: FluxSE\SyliusPayumMoneticoPlugin\Action\RefundAction
     tags:
       - { name: payum.action, factory: monetico }
 
-  prometee.monetico.action.convert_payment:
+  flux_se.sylius_payum_monetico.action.convert_payment:
     public: true
-    class: Prometee\SyliusPayumMoneticoPlugin\Action\ConvertPaymentAction
+    class: FluxSE\SyliusPayumMoneticoPlugin\Action\ConvertPaymentAction
     arguments:
-      $contextProvider: '@prometee.monetico.provider.context'
-      $referenceProvider: '@prometee.monetico.provider.reference'
-      $commentProvider: '@prometee.monetico.provider.comment'
+      $contextProvider: '@flux_se.sylius_payum_monetico.provider.context'
+      $referenceProvider: '@flux_se.sylius_payum_monetico.provider.reference'
+      $commentProvider: '@flux_se.sylius_payum_monetico.provider.comment'
     tags:
       - { name: payum.action, factory: monetico, prepend: true }

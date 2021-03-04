@@ -1,14 +1,14 @@
 services:
-    prometee.monetico.provider.reference:
-        class: Prometee\SyliusPayumMoneticoPlugin\Provider\ReferenceProvider
+    flux_se.sylius_payum_monetico.provider.reference:
+        class: FluxSE\SyliusPayumMoneticoPlugin\Provider\ReferenceProvider
 
-    prometee.monetico.provider.comment:
-        class: Prometee\SyliusPayumMoneticoPlugin\Provider\CommentProvider
+    flux_se.sylius_payum_monetico.provider.comment:
+        class: FluxSE\SyliusPayumMoneticoPlugin\Provider\CommentProvider
 
-    prometee.monetico.provider.address:
-        class: Prometee\SyliusPayumMoneticoPlugin\Provider\AddressProvider
+    flux_se.sylius_payum_monetico.provider.address:
+        class: FluxSE\SyliusPayumMoneticoPlugin\Provider\AddressProvider
 
-    prometee.monetico.provider.context:
-        class: Prometee\SyliusPayumMoneticoPlugin\Provider\ContextProvider
+    flux_se.sylius_payum_monetico.provider.context:
+        class: FluxSE\SyliusPayumMoneticoPlugin\Provider\ContextProvider
         arguments:
-            - "@prometee.monetico.provider.address"
+            - "@flux_se.sylius_payum_monetico.provider.address"

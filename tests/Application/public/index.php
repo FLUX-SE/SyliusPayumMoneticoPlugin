@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\ErrorHandler\Debug;
-use Tests\Prometee\SyliusPayumMoneticoPlugin\Application\Kernel;
+use Tests\FluxSE\SyliusPayumMoneticoPlugin\Application\Kernel;
 use Symfony\Component\HttpFoundation\Request;
 
 require dirname(__DIR__).'/config/bootstrap.php';

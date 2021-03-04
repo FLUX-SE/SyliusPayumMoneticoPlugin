@@ -14,7 +14,7 @@ See https://www.monetico-paiement.fr/ for more information.
 Install using Composer :
 
 ```
-$ composer require prometee/sylius-payum-monetico-plugin
+$ composer require flux-se/sylius-payum-monetico-plugin
 ```
 
 Enable this plugin :
@@ -26,7 +26,7 @@ Enable this plugin :
 
 return [
     // ...
-    Prometee\SyliusPayumMoneticoPlugin\PrometeeSyliusPayumMoneticoPlugin::class => ['all' => true],
+    FluxSE\SyliusPayumMoneticoPlugin\FluxSESyliusPayumMoneticoPlugin::class => ['all' => true],
     // ...
 ];
 ```
@@ -34,17 +34,17 @@ return [
 Enable the required route for Monetico notify :
 
 ```yaml
-# config/routes/prometee_sylius_payum_monetico.yaml
+# config/routes/flux_se_sylius_payum_monetico.yaml
 
-prometee_sylius_payum_monetico_notify:
-  resource: "@PrometeeSyliusPayumMoneticoPlugin/Resources/config/routing/notify.yaml"
+flux_se_sylius_payum_monetico_notify:
+  resource: "@FluxSESyliusPayumMoneticoPlugin/Resources/config/routing/notify.yaml"
 ```
 
 ## Configuration
 
 ### Monetico notify URL
 
-Contact Monetico to add a "notify URL" corresponding to the route named `prometee_sylius_payum_monetico_notify` example :
+Contact Monetico to add a "notify URL" corresponding to the route named `flux_se_sylius_payum_monetico_notify` example :
 
 ```
 https://my_domain.tld/monetico/notify
@@ -59,7 +59,7 @@ https://www.monetico-services.com/fr/test/identification/authentification.html
 Then click on the "Paramétrage" menu item, and finally on the sub menu item named "CLÉ DE SÉCURITÉ".
 You will be able to send an email to the owner of the account to get your credentials.
 
-**TIPS: `TPE number` can be choose into the select menu in the right sidebar of your Monetico merchant portal**
+**TIPS: `TPE number` can be chosen into the select menu in the right sidebar of your Monetico merchant portal**
 
 ### Sylius configuration
 
@@ -77,19 +77,19 @@ Then a form will be displayed, fill-in the required fields :
     ![Gateway Configuration][docs-assets-gateway-configuration]
     
     _NOTE1: the screenshot contains false test credentials._
- 4. give to this payment method a display name (and a description) for each languages you need
+ 4. give to this payment method a display name (and a description) for each language you need
  
- Finally click on the "Create" button to save your new payment method.
+ Finally, click on the "Create" button to save your new payment method.
 
 [docs-assets-create-payment-method]: docs/assets/create-payment-method.png
 [docs-assets-gateway-configuration]: docs/assets/gateway-configuration.png
 
-[ico-version]: https://img.shields.io/packagist/v/Prometee/sylius-payum-monetico-plugin.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/FLUX-SE/sylius-payum-monetico-plugin.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-github-actions]: https://github.com/Prometee/SyliusPayumMoneticoPlugin/workflows/Build/badge.svg
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/Prometee/SyliusPayumMoneticoPlugin.svg?style=flat-square
+[ico-github-actions]: https://github.com/FLUX-SE/SyliusPayumMoneticoPlugin/workflows/Build/badge.svg
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/FLUX-SE/SyliusPayumMoneticoPlugin.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/prometee/sylius-payum-monetico-plugin
-[link-github-actions]: https://github.com/Prometee/SyliusPayumMoneticoPlugin/actions?query=workflow%3A"Build"
-[link-scrutinizer]: https://scrutinizer-ci.com/g/Prometee/SyliusPayumMoneticoPlugin/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/Prometee/SyliusPayumMoneticoPlugin
+[link-packagist]: https://packagist.org/packages/flux-se/sylius-payum-monetico-plugin
+[link-github-actions]: https://github.com/FLUX-SE/SyliusPayumMoneticoPlugin/actions?query=workflow%3A"Build"
+[link-scrutinizer]: https://scrutinizer-ci.com/g/FLUX-SE/SyliusPayumMoneticoPlugin/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/FLUX-SE/SyliusPayumMoneticoPlugin
