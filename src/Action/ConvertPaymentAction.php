@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace FluxSE\SyliusPayumMoneticoPlugin\Action;
 
+use App\Entity\Payment\GatewayConfig;
+use Doctrine\ORM\EntityManagerInterface;
+use FluxSE\SyliusPayumMoneticoPlugin\Form\Type\MoneticoGatewayConfigurationType;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\PaymentMethodProvider;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\PaymentMethodProviderInterface;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\LogicException;
@@ -15,7 +20,13 @@ use Payum\Core\Request\GetCurrency;
 use FluxSE\SyliusPayumMoneticoPlugin\Provider\CommentProviderInterface;
 use FluxSE\SyliusPayumMoneticoPlugin\Provider\ContextProviderInterface;
 use FluxSE\SyliusPayumMoneticoPlugin\Provider\ReferenceProviderInterface;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Core\Factory\PaymentMethodFactoryInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
+use Sylius\Component\Core\Model\PaymentMethod;
+use Sylius\Component\Core\Model\PaymentMethodInterface;
+use Sylius\Component\Core\Resolver\DefaultPaymentMethodResolver;
+use Sylius\Component\Payment\Resolver\DefaultPaymentMethodResolverInterface;
 use Webmozart\Assert\Assert;
 
 final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterface
@@ -31,14 +42,19 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
     /** @var CommentProviderInterface */
     private $commentProvider;
 
+    private $entityManager;
+
     public function __construct(
-        ContextProviderInterface $contextProvider,
+        ContextProviderInterface   $contextProvider,
         ReferenceProviderInterface $referenceProvider,
-        CommentProviderInterface $commentProvider
-    ) {
+        CommentProviderInterface   $commentProvider,
+        EntityManagerInterface     $entityManager
+    )
+    {
         $this->contextProvider = $contextProvider;
         $this->referenceProvider = $referenceProvider;
         $this->commentProvider = $commentProvider;
+        $this->entityManager = $entityManager;
     }
 
     /** @param Convert $request */
@@ -75,7 +91,19 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
             $model->offsetSet('context', $this->contextProvider->getContext($payment));
         }
 
+        /** @var GatewayConfig $gatewayConfig */
+        $gatewayConfig = $this->entityManager->getRepository(GatewayConfig::class)->findOneBy(['gatewayName' => $payment->getMethod()->getCode()]);
+        if ($gatewayConfig && array_key_exists('protocol', $gatewayConfig->getConfig()) && $gatewayConfig->getConfig()['protocol']) {
+            $model->offsetSet('protocole', $gatewayConfig->getConfig()['protocol']);
+        } else {
+            $protocoles = MoneticoGatewayConfigurationType::$protocoles;
+            array_shift($protocoles);
+            $protocoles = implode(',', array_flip($protocoles));
+            $model->offsetSet('desactivemoyenpaiement', $protocoles);
+        }
+
         $request->setResult($model->getArrayCopy());
+
     }
 
     private function setAmount(ArrayObject $model, PaymentInterface $payment): void
@@ -89,7 +117,7 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
         if (0 < $currency->exp) {
             $divisor = 10 ** $currency->exp;
 
-            $amount = (string) round($amount / $divisor, $currency->exp);
+            $amount = (string)round($amount / $divisor, $currency->exp);
             if (false !== $pos = strpos($amount, '.')) {
                 $amount = str_pad($amount, $pos + 1 + $currency->exp, '0', \STR_PAD_RIGHT);
             }

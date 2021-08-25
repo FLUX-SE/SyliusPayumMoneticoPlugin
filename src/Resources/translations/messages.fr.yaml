@@ -12,6 +12,12 @@ flux_se:
       company:
         label: Société
         help: max 20 charactères
+      payment_protocol:
+        label: Protocole de paiement
     mode:
       production: Production
       test: Test
+    protocole_type:
+      classic: Classique
+      3xcb: 3X CB
+      4xcb: 4x CB

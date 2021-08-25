@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class MoneticoGatewayConfigurationType extends AbstractType
 {
+    static $protocoles = [null => 'Classique', '1euro' => '1euro', '3xcb' => '3xcb', '4xcb' => '4xcb', 'paypal' => 'paypal', 'lyfpay' => 'lyfpay'];
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -67,6 +68,11 @@ final class MoneticoGatewayConfigurationType extends AbstractType
                     ]),
                 ],
             ])
-        ;
+            ->add('protocol', ChoiceType::class, [
+                'label' => 'flux_se.sylius_payum_monetico.fields.payment_protocol.label',
+                'expanded' => true,
+                'multiple' => false,
+                'choices' => array_flip(self::$protocoles),
+            ]);
     }
 }
