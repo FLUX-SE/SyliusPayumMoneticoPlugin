@@ -7,8 +7,6 @@ namespace FluxSE\SyliusPayumMoneticoPlugin\Action;
 use App\Entity\Payment\GatewayConfig;
 use Doctrine\ORM\EntityManagerInterface;
 use FluxSE\SyliusPayumMoneticoPlugin\Form\Type\MoneticoGatewayConfigurationType;
-use FluxSE\SyliusPayumMoneticoPlugin\Provider\PaymentMethodProvider;
-use FluxSE\SyliusPayumMoneticoPlugin\Provider\PaymentMethodProviderInterface;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\LogicException;
@@ -20,13 +18,6 @@ use Payum\Core\Request\GetCurrency;
 use FluxSE\SyliusPayumMoneticoPlugin\Provider\CommentProviderInterface;
 use FluxSE\SyliusPayumMoneticoPlugin\Provider\ContextProviderInterface;
 use FluxSE\SyliusPayumMoneticoPlugin\Provider\ReferenceProviderInterface;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
-use Sylius\Component\Core\Factory\PaymentMethodFactoryInterface;
-use Sylius\Component\Core\Model\PaymentInterface;
-use Sylius\Component\Core\Model\PaymentMethod;
-use Sylius\Component\Core\Model\PaymentMethodInterface;
-use Sylius\Component\Core\Resolver\DefaultPaymentMethodResolver;
-use Sylius\Component\Payment\Resolver\DefaultPaymentMethodResolverInterface;
 use Webmozart\Assert\Assert;
 
 final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterface
