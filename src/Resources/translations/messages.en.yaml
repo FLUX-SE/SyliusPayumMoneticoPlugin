@@ -18,6 +18,6 @@ flux_se:
       production: Production
       test: Test
     protocole_type:
-      classic: Classique
+      classic: Classic
       3xcb: 3X CB
       4xcb: 4x CB
