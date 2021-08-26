@@ -12,5 +12,6 @@ services:
         class: FluxSE\SyliusPayumMoneticoPlugin\Provider\ContextProvider
         arguments:
             - "@flux_se.sylius_payum_monetico.provider.address"
-    flux_se.sylius_payum_monetico.provider.payment_method_provider:
-        class: FluxSE\SyliusPayumMoneticoPlugin\Provider\PaymentMethodProvider
+
+    flux_se.sylius_payum_monetico.provider.protocol:
+        class: FluxSE\SyliusPayumMoneticoPlugin\Provider\ProtocolProvider

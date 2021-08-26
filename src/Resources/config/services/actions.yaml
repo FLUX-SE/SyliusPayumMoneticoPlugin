@@ -19,6 +19,6 @@ services:
       $contextProvider: '@flux_se.sylius_payum_monetico.provider.context'
       $referenceProvider: '@flux_se.sylius_payum_monetico.provider.reference'
       $commentProvider: '@flux_se.sylius_payum_monetico.provider.comment'
-      $entityManager: '@doctrine.orm.entity_manager'
+      $protocolProvider: '@flux_se.sylius_payum_monetico.provider.protocol'
     tags:
       - { name: payum.action, factory: monetico, prepend: true }

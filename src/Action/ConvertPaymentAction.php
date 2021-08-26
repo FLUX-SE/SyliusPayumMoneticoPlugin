@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace FluxSE\SyliusPayumMoneticoPlugin\Action;
 
-use App\Entity\Payment\GatewayConfig;
-use Doctrine\ORM\EntityManagerInterface;
-use FluxSE\SyliusPayumMoneticoPlugin\Form\Type\MoneticoGatewayConfigurationType;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\ProtocolProviderInterface;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\LogicException;
@@ -18,6 +16,7 @@ use Payum\Core\Request\GetCurrency;
 use FluxSE\SyliusPayumMoneticoPlugin\Provider\CommentProviderInterface;
 use FluxSE\SyliusPayumMoneticoPlugin\Provider\ContextProviderInterface;
 use FluxSE\SyliusPayumMoneticoPlugin\Provider\ReferenceProviderInterface;
+use Sylius\Component\Core\Model\PaymentInterface;
 use Webmozart\Assert\Assert;
 
 final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterface
@@ -33,19 +32,20 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
     /** @var CommentProviderInterface */
     private $commentProvider;
 
-    private $entityManager;
+    /** @var ProtocolProviderInterface */
+    private $protocolProvider;
 
     public function __construct(
         ContextProviderInterface   $contextProvider,
         ReferenceProviderInterface $referenceProvider,
         CommentProviderInterface   $commentProvider,
-        EntityManagerInterface     $entityManager
+        ProtocolProviderInterface  $protocolProvider
     )
     {
         $this->contextProvider = $contextProvider;
         $this->referenceProvider = $referenceProvider;
         $this->commentProvider = $commentProvider;
-        $this->entityManager = $entityManager;
+        $this->protocolProvider = $protocolProvider;
     }
 
     /** @param Convert $request */
@@ -82,15 +82,10 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
             $model->offsetSet('context', $this->contextProvider->getContext($payment));
         }
 
-        /** @var GatewayConfig $gatewayConfig */
-        $gatewayConfig = $this->entityManager->getRepository(GatewayConfig::class)->findOneBy(['gatewayName' => $payment->getMethod()->getCode()]);
-        if ($gatewayConfig && array_key_exists('protocol', $gatewayConfig->getConfig()) && $gatewayConfig->getConfig()['protocol']) {
-            $model->offsetSet('protocole', $gatewayConfig->getConfig()['protocol']);
-        } else {
-            $protocoles = MoneticoGatewayConfigurationType::$protocoles;
-            array_shift($protocoles);
-            $protocoles = implode(',', array_flip($protocoles));
-            $model->offsetSet('desactivemoyenpaiement', $protocoles);
+        if (false === $model->offsetExists('protocole')) {
+            $model->offsetSet('protocole', $this->protocolProvider->getProtocol($payment));
+        } elseif (false === $model->offsetExists('desactivemoyenpaiement')) {
+            $model->offsetSet('desactivemoyenpaiement', $this->protocolProvider->getDesactiveMoyenPaiement($payment));
         }
 
         $request->setResult($model->getArrayCopy());

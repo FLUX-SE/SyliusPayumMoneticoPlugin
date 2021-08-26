@@ -27,9 +27,8 @@ final class NotifyController
 
     public function __construct(
         EntityRepository $paymentRepository,
-        Payum            $payum
-    )
-    {
+        Payum $payum
+    ) {
         $this->paymentRepository = $paymentRepository;
         $this->payum = $payum;
     }
@@ -87,7 +86,6 @@ final class NotifyController
 
         // Execute notify & status actions.
         $gateway = $this->payum->getGateway($gateway_name);
-
         $gateway->execute(new Notify($payment));
 
         // We don't invalidate payment tokens because if the customer click on go back to the store

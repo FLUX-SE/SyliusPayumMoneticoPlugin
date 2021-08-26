@@ -19,5 +19,8 @@ flux_se:
       test: Test
     protocole_type:
       classic: Classique
+      1euro: 1euro
       3xcb: 3X CB
       4xcb: 4x CB
+      paypal: Paypal
+      lyfpay: Lyfpay
