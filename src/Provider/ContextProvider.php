@@ -22,7 +22,6 @@ final class ContextProvider implements ContextProviderInterface
     {
         $context = [];
 
-        /** @var OrderInterface|null $order */
         $order = $payment->getOrder();
         Assert::notNull($order);
 
