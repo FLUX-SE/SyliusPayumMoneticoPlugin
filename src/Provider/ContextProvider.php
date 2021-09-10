@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FluxSE\SyliusPayumMoneticoPlugin\Provider;
 
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Webmozart\Assert\Assert;
 

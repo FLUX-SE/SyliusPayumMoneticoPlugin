@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace FluxSE\SyliusPayumMoneticoPlugin\Action;
 
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\CommentProviderInterface;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\ContextProviderInterface;
+use FluxSE\SyliusPayumMoneticoPlugin\Provider\ReferenceProviderInterface;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\LogicException;
@@ -12,9 +15,6 @@ use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Convert;
 use Payum\Core\Request\GetCurrency;
-use FluxSE\SyliusPayumMoneticoPlugin\Provider\CommentProviderInterface;
-use FluxSE\SyliusPayumMoneticoPlugin\Provider\ContextProviderInterface;
-use FluxSE\SyliusPayumMoneticoPlugin\Provider\ReferenceProviderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Webmozart\Assert\Assert;
 

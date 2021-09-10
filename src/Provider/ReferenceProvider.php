@@ -13,7 +13,8 @@ final class ReferenceProvider implements ReferenceProviderInterface
         /**
          * This number should be uniq to allow payment errors to be renewable
          */
-        return sprintf('SY%s',
+        return sprintf(
+            'SY%s',
             time()
         );
     }

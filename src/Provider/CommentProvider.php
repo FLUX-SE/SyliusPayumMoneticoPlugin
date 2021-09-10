@@ -33,7 +33,8 @@ class CommentProvider implements CommentProviderInterface
 
         $orderNumber = $order->getNumber() ?? '';
 
-        return sprintf('Order: %s%s%s',
+        return sprintf(
+            'Order: %s%s%s',
             $orderNumber,
             $customerComment,
             $userComment
