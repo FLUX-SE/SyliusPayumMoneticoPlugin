@@ -44,7 +44,12 @@ flux_se_sylius_payum_monetico_notify:
 
 ### Monetico notify URL
 
-Contact Monetico to add a "notify URL" corresponding to the route named `flux_se_sylius_payum_monetico_notify` example :
+Using the Monetico merchant portal :
+
+https://www.monetico-services.com/fr/test/identification/authentification.html
+
+Click on the "Paramétrage" menu item, and finally on the sub menu item named "GESTION CODES SITES",
+you will be able to email Monetico to add a "notify URL" ("URL du CGI2") corresponding to the Symfony route named `flux_se_sylius_payum_monetico_notify` example :
 
 ```
 https://my_domain.tld/monetico/notify
@@ -52,14 +57,15 @@ https://my_domain.tld/monetico/notify
 
 ### Monetico credentials
 
-Get your `TPE number`, your `KEY` and your `COMPANY` name on your Monetico merchant portal :
+Get your `TPE number`, your `KEY` and your `COMPANY`(labeled "Code Site") name on your Monetico merchant portal :
 
 https://www.monetico-services.com/fr/test/identification/authentification.html
 
-Then click on the "Paramétrage" menu item, and finally on the sub menu item named "CLÉ DE SÉCURITÉ".
-You will be able to send an email to the owner of the account to get your credentials.
-
-**TIPS: `TPE number` can be chosen into the select menu in the right sidebar of your Monetico merchant portal**
+ 1. `TPE number` : can be chosen into the select menu in the right sidebar of your Monetico merchant portal
+ 2. `KEY` : Click on the "Paramétrage" menu item, and finally on the sub menu item named "CLÉ DE SÉCURITÉ".
+ You will be able to email the owner of the account to get your `KEY`.
+ 3. `COMPANY` : Click on the "Paramétrage" menu item, and finally on the sub menu item named "GESTION CODES SITES".
+ The `COMPANY` is labelled "Code Site".
 
 ### Sylius configuration
 
