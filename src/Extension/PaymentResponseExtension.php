@@ -16,16 +16,18 @@ class PaymentResponseExtension implements ExtensionInterface
 {
     public function onPreExecute(Context $context): void
     {
-        return;
     }
 
     public function onExecute(Context $context): void
     {
-        return;
     }
 
     public function onPostExecute(Context $context): void
     {
+        if (null !== $context->getException()) {
+            return;
+        }
+
         $request = $context->getRequest();
         if (false === $request instanceof PaymentResponse) {
             return;
