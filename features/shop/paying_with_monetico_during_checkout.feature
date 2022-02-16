@@ -50,3 +50,14 @@ Feature: Paying with Monetico during checkout
     And I click on "go back" during my Monetico payment
     Then I should be notified that my payment has been cancelled
     And I should be able to pay again
+
+  @ui
+  Scenario: Retrying the payment with success inside Monetico portal
+    Given I added product "PHP T-Shirt" to the cart
+    And I have proceeded selecting "Monetico" payment method
+    And I have confirmed my order with Monetico payment
+    And I get redirected to Monetico and fail my attempt
+    And I retry my payment attempt and succeed
+    When I get back from the Monetico portal
+    Then I should be notified that my payment has been completed
+    And I should see the thank you page
