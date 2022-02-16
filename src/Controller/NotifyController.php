@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace FluxSE\SyliusPayumMoneticoPlugin\Controller;
 
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Ekyna\Component\Payum\Monetico\Api\Api;
-use Payum\Core\Exception\LogicException;
 use Payum\Core\Payum;
 use Payum\Core\Request\Notify;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
-use Sylius\Component\Payment\Model\PaymentInterface;
+use Sylius\Component\Payment\Model\PaymentInterface as BasePaymentInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Webmozart\Assert\Assert;
 
 final class NotifyController
 {
@@ -48,50 +47,89 @@ final class NotifyController
 
         $queryBuilder = $this->paymentRepository->createQueryBuilder('p');
         // Find your payment entity
-        try {
-            /** @var PaymentInterface $payment */
-            $payment = $queryBuilder
-                ->join('p.method', 'm')
-                ->join('m.gatewayConfig', 'gc')
-                ->where('p.details LIKE :reference')
-                ->andWhere('gc.factoryName = :factory_name')
-                ->andWhere('p.state = :state')
-                ->setParameters([
-                    'reference' => '%"reference":%"' . $reference . '"%',
-                    'factory_name' => 'monetico',
-                    'state' => PaymentInterface::STATE_NEW,
-                ])
-                ->getQuery()->getSingleResult();
-        } catch (NoResultException $e) {
+        /** @var PaymentInterface[] $payments */
+        $payments = $queryBuilder
+            ->join('p.method', 'm')
+            ->join('m.gatewayConfig', 'gc')
+            ->where('p.details LIKE :reference')
+            ->andWhere('gc.factoryName = :factory_name')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setParameters([
+                'reference' => '%"reference":%"' . $reference . '"%',
+                'factory_name' => 'monetico',
+            ])
+            ->getQuery()->getResult();
+        if ([] === $payments) {
             throw new NotFoundHttpException(
-                sprintf('Payments not found for this reference : "%s" !', $reference),
-                $e
-            );
-        } catch (NonUniqueResultException $e) {
-            throw new NotFoundHttpException(
-                sprintf('Many payments found for this reference : "%s", only one is required !', $reference),
-                $e
+                sprintf('Payment not found for this reference : "%s" !', $reference)
             );
         }
 
-        /** @var PaymentMethodInterface $payment_method */
-        $payment_method = $payment->getMethod();
-        $gatewayConfig = $payment_method->getGatewayConfig();
-
-        if (null === $gatewayConfig) {
-            throw new LogicException('The gateway config should not be nul !');
+        $payment = $this->processPayments($payments);
+        if (null === $payment) {
+            throw new NotFoundHttpException(
+                sprintf(
+                    'No payment found with state "%s", "%s" or "%s" for this reference : "%s" !',
+                    PaymentInterface::STATE_NEW,
+                    PaymentInterface::STATE_CANCELLED,
+                    PaymentInterface::STATE_FAILED,
+                    $reference
+                )
+            );
         }
 
-        $gateway_name = $gatewayConfig->getGatewayName();
-
-        // Execute notify & status actions.
-        $gateway = $this->payum->getGateway($gateway_name);
-        $gateway->execute(new Notify($payment));
+        $this->notifyWithPayment($payment);
 
         // We don't invalidate payment tokens because if the customer click on go back to the store
-        // the token will not exists anymore so there will be a 404 error page
+        // the token won't exist anymore so there will be a 404 error page
 
         // Return expected response
         return new Response(Api::NOTIFY_SUCCESS);
+    }
+
+    /**
+     * @param PaymentInterface[] $payments
+     */
+    private function processPayments(array $payments): ?PaymentInterface
+    {
+        foreach ($payments as $payment) {
+            switch ($payment->getState()) {
+                case BasePaymentInterface::STATE_NEW:
+                    return $payment;
+                case BasePaymentInterface::STATE_CANCELLED:
+                case BasePaymentInterface::STATE_FAILED:
+                    $order = $payment->getOrder();
+                    Assert::notNull($order);
+
+                    // Retrieve this new payment if it exists
+                    $emptyPayment = $order->getLastPayment(BasePaymentInterface::STATE_NEW);
+                    Assert::notNull($emptyPayment, sprintf(
+                        'No Payment state "%s" found into the order !',
+                        BasePaymentInterface::STATE_NEW
+                    ));
+
+                    // Add the previous details to allow `PaymentResponseAction` to update the values
+                    $emptyPayment->setDetails($payment->getDetails());
+
+                    return $emptyPayment;
+            }
+        }
+
+        return null;
+    }
+
+    private function notifyWithPayment(PaymentInterface $payment): void
+    {
+        /** @var PaymentMethodInterface|null $paymentMethod */
+        $paymentMethod = $payment->getMethod();
+        Assert::notNull($paymentMethod);
+        $gatewayConfig = $paymentMethod->getGatewayConfig();
+        Assert::notNull($gatewayConfig);
+
+        $gatewayName = $gatewayConfig->getGatewayName();
+
+        // Execute notify & status actions.
+        $gateway = $this->payum->getGateway($gatewayName);
+        $gateway->execute(new Notify($payment));
     }
 }

@@ -46,12 +46,55 @@ class MoneticoShopContext extends MinkContext implements Context
      */
     public function iGetRedirectedToMonetico(): void
     {
-        $postData = [
+        $postData = $this->getPostDataWithCodeRetour('paiement');
+        $this->paymentPage->notify($postData);
+        $this->paymentPage->capture();
+    }
+
+    /**
+     * @Given I get redirected to Monetico and fail my attempt
+     */
+    public function IGetRedirectedToMoneticoAndFailMyAttempt(): void
+    {
+        $postData = $this->getPostDataWithCodeRetour('canceled');
+        $this->paymentPage->notify($postData);
+    }
+
+    /**
+     * @Given I retry my payment attempt and succeed
+     */
+    public function IRetryMyPaymentAttemptAndSucceed(): void
+    {
+        $postData = $this->getPostDataWithCodeRetour('paiement');
+        $this->paymentPage->notify($postData);
+    }
+
+    /**
+     * @Given I have clicked on "go back" during my Monetico payment
+     * @When I click on "go back" during my Monetico payment
+     * @When I get back from the Monetico portal
+     */
+    public function iCancelMyMoneticoPayment()
+    {
+        $this->paymentPage->capture();
+    }
+
+    /**
+     * @When I try to pay again Monetico payment
+     */
+    public function iTryToPayAgainMoneticoPayment(): void
+    {
+        $this->orderDetails->pay();
+    }
+
+    private function getPostDataWithCodeRetour(string $codeRetour): array
+    {
+        return [
             'TPE' => MoneticoContext::TPE,
             'date' => '05/12/2006_a_11:55:23',
             'montant' => '19.99USD',
             'texte-libre' => 'LeTexteLibre',
-            'code-retour' => 'paiement',
+            'code-retour' => $codeRetour,
             'cvx' => 'oui',
             'vld' => '1208',
             'brand' => 'VI',
@@ -76,27 +119,7 @@ class MoneticoShopContext extends MinkContext implements Context
                     'transactionID' => '555bd9d9-1cf1-4ba8-b37c-1a96bc8b603a',
                     'authenticationValue' => 'cmJvd0I4SHk3UTRkYkFSQ3FYY3U=',
                 ],
-            ])),
+            ], JSON_THROW_ON_ERROR)),
         ];
-
-        $this->paymentPage->notify($postData);
-        $this->paymentPage->capture();
-    }
-
-    /**
-     * @Given I have clicked on "go back" during my Monetico payment
-     * @When I click on "go back" during my Monetico payment
-     */
-    public function iCancelMyMoneticoPayment()
-    {
-        $this->paymentPage->capture();
-    }
-
-    /**
-     * @When I try to pay again Monetico payment
-     */
-    public function iTryToPayAgainMoneticoPayment(): void
-    {
-        $this->orderDetails->pay();
     }
 }

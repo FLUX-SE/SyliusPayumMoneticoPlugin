@@ -5,14 +5,14 @@
   "description": "Payum Monetico gateway plugin for Sylius",
   "license": "MIT",
   "authors": [
-      {
-          "name": "Francis HILAIRE",
-          "email": "Prometee@users.noreply.github.com"
-      }
+    {
+      "name": "Francis HILAIRE",
+      "email": "Prometee@users.noreply.github.com"
+    }
   ],
   "require": {
-    "sylius/sylius": "^1.5",
-    "ekyna/payum-monetico": "^1.5"
+    "ekyna/payum-monetico": "^1.5",
+    "sylius/sylius": "~1.11.0"
   },
   "require-dev": {
     "ext-json": "*",
@@ -33,6 +33,7 @@
     "phpstan/phpstan-strict-rules": "^0.12.0",
     "phpstan/phpstan-webmozart-assert": "0.12.12",
     "phpunit/phpunit": "^9.5",
+    "polishsymfonycommunity/symfony-mocker-container": "^1.0",
     "sylius-labs/coding-standard": "^4.0",
     "symfony/browser-kit": "^4.4 || ^5.4",
     "symfony/debug-bundle": "^4.4 || ^5.4",
@@ -66,11 +67,11 @@
       "@php vendor/bin/psalm"
     ],
     "analyse-with-ecs": [
-        "@php vendor/bin/ecs check src",
-        "@analyse"
+      "@php vendor/bin/ecs check src",
+      "@analyse"
     ],
     "fix": [
-        "@php vendor/bin/ecs check src --fix"
+      "@php vendor/bin/ecs check src --fix"
     ],
     "post-install-cmd": [
       "@php bin/create_node_symlink.php"
