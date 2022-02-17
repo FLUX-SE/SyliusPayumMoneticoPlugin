@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace FluxSE\SyliusPayumMoneticoPlugin\Controller;
 
 use Ekyna\Component\Payum\Monetico\Api\Api;
+use Payum\Core\Model\Identity;
+use Payum\Core\Model\Token;
 use Payum\Core\Payum;
 use Payum\Core\Request\Notify;
+use Payum\Core\Security\TokenInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
@@ -21,14 +24,19 @@ final class NotifyController
     /** @var EntityRepository */
     private $paymentRepository;
 
+    /** @var EntityRepository */
+    private $paymentSecurityTokenRepository;
+
     /** @var Payum */
     private $payum;
 
     public function __construct(
         EntityRepository $paymentRepository,
+        EntityRepository $paymentSecurityTokenRepository,
         Payum $payum
     ) {
         $this->paymentRepository = $paymentRepository;
+        $this->paymentSecurityTokenRepository = $paymentSecurityTokenRepository;
         $this->payum = $payum;
     }
 
@@ -77,6 +85,10 @@ final class NotifyController
                 )
             );
         }
+
+        // The Payum `Token` will be updated with the reference to the new Sylius `Payment`
+        // to avoid customer to be redirected to the capture URL with an old `canceled` `Payment`
+        $this->updatePaymentSecurityToken($payment);
 
         $this->notifyWithPayment($payment);
 
@@ -131,5 +143,27 @@ final class NotifyController
         // Execute notify & status actions.
         $gateway = $this->payum->getGateway($gatewayName);
         $gateway->execute(new Notify($payment));
+    }
+
+    private function updatePaymentSecurityToken(PaymentInterface $newPayment): void
+    {
+        $order = $newPayment->getOrder();
+        Assert::notNull($order);
+
+        foreach ($order->getPayments() as $payment) {
+            $identify = new Identity($payment->getId(), get_class($payment));
+            /** @var TokenInterface[] $tokens */
+            $tokens = $this->paymentSecurityTokenRepository->findBy([
+                'details' => $identify,
+            ]);
+            if (count($tokens) === 0) {
+                continue;
+            }
+
+            $newIdentify = new Identity($newPayment->getId(), get_class($newPayment));
+            foreach ($tokens as $token) {
+                $token->setDetails($newIdentify);
+            }
+        }
     }
 }

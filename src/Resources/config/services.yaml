@@ -25,4 +25,5 @@ services:
         class: FluxSE\SyliusPayumMoneticoPlugin\Controller\NotifyController
         arguments:
             $paymentRepository: '@sylius.repository.payment'
+            $paymentSecurityTokenRepository: '@sylius.repository.payment_security_token'
             $payum: '@payum'
