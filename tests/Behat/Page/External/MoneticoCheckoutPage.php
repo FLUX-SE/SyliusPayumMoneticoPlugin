@@ -80,7 +80,7 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
 
         $this->client->request('POST', $this->moneticoNotifyPage->getAbsoluteUrl(), $postData);
         if ($this->client->getResponse()->getStatusCode() !== 200) {
-            throw new LogicException('Notify Request fail, see logs for more info !');
+            throw new LogicException('Notify Request fail, see application logs for more info !');
         }
     }
 
