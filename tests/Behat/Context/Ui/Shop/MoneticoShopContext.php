@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Context\Ui\Shop;
 
-use Behat\Behat\Context\Context;
 use Behat\MinkExtension\Context\MinkContext;
 use Sylius\Behat\Page\Shop\Checkout\CompletePageInterface;
 use Sylius\Behat\Page\Shop\Order\ShowPageInterface;
 use Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Context\Setup\MoneticoContext;
 use Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\External\MoneticoCheckoutPageInterface;
 
-class MoneticoShopContext extends MinkContext implements Context
+class MoneticoShopContext extends MinkContext
 {
     /** @var CompletePageInterface */
     private $summaryPage;
