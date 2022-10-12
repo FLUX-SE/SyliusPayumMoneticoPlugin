@@ -16,8 +16,8 @@
   },
   "require-dev": {
     "ext-json": "*",
+        "behat/behat": "^3.7",
     "behat/mink": "^1.8",
-    "behat/behat": "^3.7",
     "dmore/behat-chrome-extension": "^1.3",
     "dmore/chrome-mink-driver": "^2.7",
     "friends-of-behat/mink": "^1.8",
@@ -42,7 +42,6 @@
     "symfony/web-profiler-bundle": "^4.4 || ^5.4",
     "vimeo/psalm": "^4.6.4"
   },
-  "prefer-stable": true,
   "autoload": {
     "psr-4": { "FluxSE\\SyliusPayumMoneticoPlugin\\": "src/" }
   },
@@ -58,21 +57,15 @@
     }
   },
   "config": {
-      "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": false,
+            "phpstan/extension-installer": true,
+            "symfony/flex": true,
+            "symfony/thanks": true
+        }
   },
   "scripts": {
-    "analyse": [
-      "@composer validate --strict",
-      "@php vendor/bin/phpstan.phar analyse -l max src/",
-      "@php vendor/bin/psalm"
-    ],
-    "analyse-with-ecs": [
-      "@php vendor/bin/ecs check src",
-      "@analyse"
-    ],
-    "fix": [
-      "@php vendor/bin/ecs check src --fix"
-    ],
     "post-install-cmd": [
       "@php bin/create_node_symlink.php"
     ],
