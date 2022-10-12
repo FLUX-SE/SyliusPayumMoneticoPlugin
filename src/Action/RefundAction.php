@@ -31,7 +31,7 @@ class RefundAction implements ActionInterface, GatewayAwareInterface
 
     public function supports($request): bool
     {
-        return $request instanceof Refund
-            && $request->getModel() instanceof \ArrayAccess;
+        return $request instanceof Refund &&
+            $request->getModel() instanceof \ArrayAccess;
     }
 }

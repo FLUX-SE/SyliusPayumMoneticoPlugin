@@ -114,8 +114,8 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
 
     public function supports($request): bool
     {
-        return $request instanceof Convert
-            && $request->getSource() instanceof PaymentInterface
-            && $request->getTo() == 'array';
+        return $request instanceof Convert &&
+            $request->getSource() instanceof PaymentInterface &&
+            $request->getTo() == 'array';
     }
 }

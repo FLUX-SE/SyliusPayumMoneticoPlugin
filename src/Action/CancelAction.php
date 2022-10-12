@@ -32,7 +32,7 @@ class CancelAction implements ActionInterface, GatewayAwareInterface
 
     public function supports($request): bool
     {
-        return $request instanceof Cancel
-            && $request->getModel() instanceof ArrayAccess;
+        return $request instanceof Cancel &&
+            $request->getModel() instanceof ArrayAccess;
     }
 }
