@@ -1,4 +1,12 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en_US
+  locale: en_US
+
+services:
+
+  Tests\FluxSE\SyliusPayumMoneticoPlugin\App\Extension\IframeExtension:
+    public: true
+    tags:
+      - name: payum.extension
+        factory: monetico
