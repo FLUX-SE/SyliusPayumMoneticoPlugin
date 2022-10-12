@@ -12,7 +12,7 @@
   ],
   "require": {
     "ekyna/payum-monetico": "^1.5",
-    "sylius/sylius": "~1.11.0"
+    "sylius/sylius": "^1.5"
   },
   "require-dev": {
     "ext-json": "*",
