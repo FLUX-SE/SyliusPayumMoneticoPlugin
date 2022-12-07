@@ -10,8 +10,14 @@
       "email": "Prometee@users.noreply.github.com"
     }
   ],
+  "repositories": [
+    {
+      "type": "github",
+      "url": "git@github.com:Prometee/PayumMonetico.git"
+    }
+  ],
   "require": {
-    "ekyna/payum-monetico": "^1.5",
+    "ekyna/payum-monetico": "^1.5|dev-symfony-6",
     "sylius/sylius": "^1.5"
   },
   "require-dev": {
