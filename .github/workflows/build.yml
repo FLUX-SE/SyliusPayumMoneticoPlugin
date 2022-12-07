@@ -100,6 +100,11 @@ jobs:
                 name: Run PHPStan
                 run: vendor/bin/phpstan analyse
                 if: always() && steps.end-of-setup.outcome == 'success'
+
+            -
+                name: Run PHPSpec
+                run: vendor/bin/phpspec run --ansi -f progress --no-interaction
+                if: always() && steps.end-of-setup.outcome == 'success'
     tests:
         runs-on: ubuntu-latest
 
