@@ -11,6 +11,7 @@ use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\ExampleFactoryInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Core\Repository\PaymentMethodRepositoryInterface;
+use Webmozart\Assert\Assert;
 
 class MoneticoContext implements Context
 {
@@ -57,7 +58,9 @@ class MoneticoContext implements Context
             'monetico',
             'Monetico'
         );
-        $paymentMethod->getGatewayConfig()->setConfig([
+        $gatewayConfig = $paymentMethod->getGatewayConfig();
+        Assert::notNull($gatewayConfig);
+        $gatewayConfig->setConfig([
             'key' => self::KEY,
             'tpe' => self::TPE,
             'company' => self::COMPANY,

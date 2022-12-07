@@ -8,9 +8,6 @@ use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 
 class MoneticoNotifyPage extends SymfonyPage implements MoneticoNotifyPageInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getAbsoluteUrl(): string
     {
         return $this->getUrl();

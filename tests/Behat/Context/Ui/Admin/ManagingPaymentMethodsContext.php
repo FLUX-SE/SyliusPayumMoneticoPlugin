@@ -33,7 +33,7 @@ class ManagingPaymentMethodsContext implements Context
     /**
      * @When I configure it with test monetico gateway data
      */
-    public function iConfigureItWithTestMoneticoGatewayData()
+    public function iConfigureItWithTestMoneticoGatewayData(): void
     {
         $this->createPage->setMoneticoKey(MoneticoContext::KEY);
         $this->createPage->setMoneticoTpe(MoneticoContext::TPE);

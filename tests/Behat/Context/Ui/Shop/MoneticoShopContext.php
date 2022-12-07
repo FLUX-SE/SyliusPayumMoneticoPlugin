@@ -35,7 +35,7 @@ class MoneticoShopContext extends MinkContext
      * @When I confirm my order with Monetico payment
      * @Given I have confirmed my order with Monetico payment
      */
-    public function iConfirmMyOrderWithMoneticoPayment()
+    public function iConfirmMyOrderWithMoneticoPayment(): void
     {
         $this->summaryPage->confirmOrder();
     }
@@ -73,7 +73,7 @@ class MoneticoShopContext extends MinkContext
      * @When I click on "go back" during my Monetico payment
      * @When I get back from the Monetico portal
      */
-    public function iCancelMyMoneticoPayment()
+    public function iCancelMyMoneticoPayment(): void
     {
         $this->paymentPage->capture();
     }
