@@ -53,8 +53,8 @@ jobs:
                     composer global require --no-progress --no-scripts --no-plugins "symfony/flex"
             -
                 name: Get Composer cache directory
+                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
                 id: composer-cache
-                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
             -
                 name: Cache Composer
@@ -203,8 +203,8 @@ jobs:
 
             -
                 name: Get Composer cache directory
+                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
                 id: composer-cache
-                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
             -
                 name: Cache Composer
