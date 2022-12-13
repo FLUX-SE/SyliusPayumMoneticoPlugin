@@ -12,7 +12,7 @@
                  parent="sylius.behat.page"
                  class="Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\External\MoneticoCheckoutPage">
             <argument type="service" id="sylius.repository.payment_security_token" key="$securityTokenRepository" />
-            <argument type="service" id="test.client" key="$client" />
+            <argument type="service" id="tests.flux_se.sylius_payum_monetico.notify.http_browser" key="$httpBrowser" />
             <argument type="service" id="tests.flux_se.sylius_payum_monetico.behat.page.monetico.notify_page" key="$moneticoNotifyPage" />
             <argument type="service" id="sylius.repository.payment" key="$paymentRepository" />
         </service>
@@ -20,6 +20,11 @@
         <service id="tests.flux_se.sylius_payum_monetico.behat.page.monetico.notify_page"
                  parent="sylius.behat.symfony_page"
                  class="Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\Monetico\MoneticoNotifyPage">
+        </service>
+
+        <service id="tests.flux_se.sylius_payum_monetico.notify.http_browser"
+            class="Symfony\Component\BrowserKit\HttpBrowser">
+            <argument type="service" id="tests.flux_se.sylius_payum_monetico.notify.http_client" key="$client"/>
         </service>
     </services>
 </container>

@@ -13,7 +13,8 @@ use RuntimeException;
 use Sylius\Bundle\PayumBundle\Model\PaymentSecurityTokenInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use Symfony\Component\BrowserKit\HttpBrowser;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Context\Setup\MoneticoContext;
 use Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\Monetico\MoneticoNotifyPageInterface;
 
@@ -22,8 +23,8 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
     /** @var RepositoryInterface<PaymentSecurityTokenInterface> */
     private $securityTokenRepository;
 
-    /** @var HttpKernelBrowser */
-    private $client;
+    /** @var HttpBrowser */
+    private $httpBrowser;
 
     /** @var MoneticoNotifyPageInterface */
     private $moneticoNotifyPage;
@@ -39,14 +40,14 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
         Session $session,
         $minkParameters,
         RepositoryInterface $securityTokenRepository,
-        HttpKernelBrowser $client,
+        HttpBrowser $httpBrowser,
         MoneticoNotifyPageInterface $moneticoNotifyPage,
         RepositoryInterface $paymentRepository
     ) {
         parent::__construct($session, $minkParameters);
 
         $this->securityTokenRepository = $securityTokenRepository;
-        $this->client = $client;
+        $this->httpBrowser = $httpBrowser;
         $this->moneticoNotifyPage = $moneticoNotifyPage;
         $this->paymentRepository = $paymentRepository;
     }
@@ -74,8 +75,10 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
         ksort($postData);
         $postData['MAC'] = $api->computeMac($postData);
 
-        $this->client->request('POST', $this->moneticoNotifyPage->getAbsoluteUrl(), $postData);
-        if ($this->client->getResponse()->getStatusCode() !== 200) {
+        $this->httpBrowser->request('POST', $this->moneticoNotifyPage->getAbsoluteUrl(), $postData);
+        /** @var Response $response */
+        $response = $this->httpBrowser->getResponse();
+        if ($response->getStatusCode() !== 200) {
             throw new LogicException('Notify Request fail, see application logs for more info !');
         }
     }
