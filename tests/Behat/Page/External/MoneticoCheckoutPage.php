@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\External;
 
-use Behat\Mink\Exception\DriverException;
-use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Mink\Session;
 use Ekyna\Component\Payum\Monetico\Api\Api;
 use FriendsOfBehat\PageObjectExtension\Page\Page;
 use LogicException;
 use Payum\Core\Security\TokenInterface;
 use RuntimeException;
+use Sylius\Bundle\PayumBundle\Model\PaymentSecurityTokenInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
@@ -20,7 +19,7 @@ use Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\Monetico\MoneticoNotifyPag
 
 final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInterface
 {
-    /** @var RepositoryInterface */
+    /** @var RepositoryInterface<PaymentSecurityTokenInterface> */
     private $securityTokenRepository;
 
     /** @var HttpKernelBrowser */
@@ -29,10 +28,14 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
     /** @var MoneticoNotifyPageInterface */
     private $moneticoNotifyPage;
 
-    /** @var RepositoryInterface */
+    /** @var RepositoryInterface<PaymentInterface> */
     private $paymentRepository;
 
-    public function __construct(
+    /**
+     * @param RepositoryInterface<PaymentSecurityTokenInterface> $securityTokenRepository
+     * @param RepositoryInterface<PaymentInterface> $paymentRepository
+     */
+     public function __construct(
         Session $session,
         $minkParameters,
         RepositoryInterface $securityTokenRepository,
@@ -48,10 +51,6 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
         $this->paymentRepository = $paymentRepository;
     }
 
-    /**
-     * @throws DriverException
-     * @throws UnsupportedDriverActionException
-     */
     public function capture(): void
     {
         $captureToken = $this->findToken(false);
@@ -59,9 +58,6 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
         $this->getDriver()->visit($captureToken->getTargetUrl());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function notify(array $postData): void
     {
         $api = new Api();
@@ -86,13 +82,14 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
 
     private function findToken(bool $afterType = true): TokenInterface
     {
-        /** @var TokenInterface $token */
         foreach ($this->securityTokenRepository->findAll() as $token) {
-            if ($afterType && null === $token->getAfterUrl()) {
+            /** @var string|null $afterUrl */
+            $afterUrl = $token->getAfterUrl();
+            if ($afterType && null === $afterUrl) {
                 return $token;
             }
 
-            if (!$afterType && null !== $token->getAfterUrl()) {
+            if (!$afterType && null !== $afterUrl) {
                 return $token;
             }
         }
@@ -100,9 +97,6 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
         throw new RuntimeException('Cannot find token, check if you are after proper checkout steps');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getUrl(array $urlParameters = []): string
     {
         return 'https://www.monetico-paiement.fr';

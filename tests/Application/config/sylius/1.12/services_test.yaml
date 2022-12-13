@@ -1,0 +1,7 @@
+services:
+
+  Tests\FluxSE\SyliusPayumMoneticoPlugin\App\Action\GetHttpRequestAction:
+    decorates: payum.action.get_http_request
+    arguments:
+      $decoratedGetHttpRequestAction: '@Tests\FluxSE\SyliusPayumMoneticoPlugin\App\Action\GetHttpRequestAction.inner'
+      $httpRequestStack: '@request_stack'
