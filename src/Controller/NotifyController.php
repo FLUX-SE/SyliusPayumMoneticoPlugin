@@ -6,7 +6,6 @@ namespace FluxSE\SyliusPayumMoneticoPlugin\Controller;
 
 use Ekyna\Component\Payum\Monetico\Api\Api;
 use Payum\Core\Model\Identity;
-use Payum\Core\Model\Token;
 use Payum\Core\Payum;
 use Payum\Core\Request\Notify;
 use Payum\Core\Security\TokenInterface;
