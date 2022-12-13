@@ -83,11 +83,13 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
     private function findToken(bool $afterType = true): TokenInterface
     {
         foreach ($this->securityTokenRepository->findAll() as $token) {
-            if ($afterType && null === $token->getAfterUrl()) {
+            /** @var string|null $afterUrl */
+            $afterUrl = $token->getAfterUrl();
+            if ($afterType && null === $afterUrl) {
                 return $token;
             }
 
-            if (!$afterType && null !== $token->getAfterUrl()) {
+            if (!$afterType && null !== $afterUrl) {
                 return $token;
             }
         }
