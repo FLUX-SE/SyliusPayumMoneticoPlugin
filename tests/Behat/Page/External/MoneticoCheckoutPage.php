@@ -19,7 +19,7 @@ use Tests\FluxSE\SyliusPayumMoneticoPlugin\Behat\Page\Monetico\MoneticoNotifyPag
 
 final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInterface
 {
-    /** @var RepositoryInterface */
+    /** @var RepositoryInterface<PaymentSecurityTokenInterface> */
     private $securityTokenRepository;
 
     /** @var HttpKernelBrowser */
@@ -28,9 +28,13 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
     /** @var MoneticoNotifyPageInterface */
     private $moneticoNotifyPage;
 
-    /** @var RepositoryInterface */
+    /** @var RepositoryInterface<PaymentInterface> */
     private $paymentRepository;
 
+    /**
+     * @param RepositoryInterface<PaymentSecurityTokenInterface> $securityTokenRepository
+     * @param RepositoryInterface<PaymentInterface> $paymentRepository
+     */
      public function __construct(
         Session $session,
         $minkParameters,
@@ -78,15 +82,12 @@ final class MoneticoCheckoutPage extends Page implements MoneticoCheckoutPageInt
 
     private function findToken(bool $afterType = true): TokenInterface
     {
-        /** @var PaymentSecurityTokenInterface $token */
         foreach ($this->securityTokenRepository->findAll() as $token) {
-            /** @var string|null $afterUrl */
-            $afterUrl = $token->getAfterUrl();
-            if ($afterType && null === $afterUrl) {
+            if ($afterType && null === $token->getAfterUrl()) {
                 return $token;
             }
 
-            if (!$afterType && null !== $afterUrl) {
+            if (!$afterType && null !== $token->getAfterUrl()) {
                 return $token;
             }
         }
