@@ -38,7 +38,7 @@ final class AddressProvider implements AddressProviderInterface
     }
 
     /** @return string[] */
-    private function splitWords(string $text, int $width = 50): array
+    private function splitWords(string $text, int $width = 48): array
     {
         $words = explode(' ', $text);
         $text = '';
